@@ -42,9 +42,11 @@ const IPCProductsTable = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState([]);
+  const [expandedSubcategories, setExpandedSubcategories] = useState([]);
   const [, setExpandedTables] = useState({});
   const [isMobile, setIsMobile] = useState(false);
   const [viewMode, setViewMode] = useState("table");
+  const [expandedSpecRows, setExpandedSpecRows] = useState({});
 
   // Color schemes for different categories - UPDATED IDs
   const colorSchemes = {
@@ -128,29 +130,44 @@ const IPCProductsTable = () => {
     });
   };
 
+  const preservePageScroll = (updateFn) => {
+    const pageTop = window.scrollY;
+    updateFn();
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: pageTop, behavior: "auto" });
+    });
+  };
+
   const toggleCategory = (categoryId) => {
-    setExpandedCategories((prev) =>
-      prev.includes(categoryId)
-        ? prev.filter((id) => id !== categoryId)
-        : [...prev, categoryId],
-    );
+    setExpandedCategories((prev) => {
+      const isOpen = prev.includes(categoryId);
+      if (isOpen) {
+        setExpandedSubcategories((prevSub) =>
+          prevSub.filter((key) => !key.startsWith(`${categoryId}::`)),
+        );
+        return prev.filter((id) => id !== categoryId);
+      }
+      return [...prev, categoryId];
+    });
     if (!expandedCategories.includes(categoryId)) {
       setActiveSubcategory(null);
     }
   };
 
   const handleCategoryClick = (category) => {
-    if (activeCategory?.id === category.id) {
-      toggleCategory(category.id);
-    } else {
-      setActiveCategory(category);
-      setActiveSubcategory(null);
-      // Always expand this category when clicking on it
-      if (!expandedCategories.includes(category.id)) {
-        setExpandedCategories((prev) => [...prev, category.id]);
+    preservePageScroll(() => {
+      if (activeCategory?.id === category.id) {
+        toggleCategory(category.id);
+      } else {
+        setActiveCategory(category);
+        setActiveSubcategory(null);
+        // Always expand this category when clicking on it
+        if (!expandedCategories.includes(category.id)) {
+          setExpandedCategories((prev) => [...prev, category.id]);
+        }
+        setExpandedTables({});
       }
-      setExpandedTables({});
-    }
+    });
   };
 
   const handleSubcategoryClick = (category, subcategory, event) => {
@@ -158,26 +175,32 @@ const IPCProductsTable = () => {
       event.stopPropagation();
     }
 
-    setActiveCategory(category);
-    setActiveSubcategory(subcategory);
+    preservePageScroll(() => {
+      const subcategoryKey = `${category.id}::${subcategory.id}`;
+      setActiveCategory(category);
+      setActiveSubcategory(subcategory);
+      setExpandedSubcategories((prev) =>
+        prev.includes(subcategoryKey) ? prev : [...prev, subcategoryKey],
+      );
 
-    // Ensure the parent category is expanded - FIXED LOGIC
-    if (!expandedCategories.includes(category.id)) {
-      setExpandedCategories((prev) => [...prev, category.id]);
-    } else {
-      // If already expanded, ensure it stays expanded
-      setExpandedCategories((prev) => {
-        if (!prev.includes(category.id)) {
-          return [...prev, category.id];
-        }
-        return prev;
-      });
-    }
+      // Ensure the parent category is expanded - FIXED LOGIC
+      if (!expandedCategories.includes(category.id)) {
+        setExpandedCategories((prev) => [...prev, category.id]);
+      } else {
+        // If already expanded, ensure it stays expanded
+        setExpandedCategories((prev) => {
+          if (!prev.includes(category.id)) {
+            return [...prev, category.id];
+          }
+          return prev;
+        });
+      }
 
-    if (isMobile) {
-      setIsMobileMenuOpen(false);
-    }
-    setExpandedTables({});
+      if (isMobile) {
+        setIsMobileMenuOpen(false);
+      }
+      setExpandedTables({});
+    });
   };
 
   const handleProductClick = (category, subcategory, product, event) => {
@@ -185,18 +208,24 @@ const IPCProductsTable = () => {
       event.stopPropagation();
     }
 
-    setActiveCategory(category);
-    setActiveSubcategory(product);
+    preservePageScroll(() => {
+      const subcategoryKey = `${category.id}::${subcategory.id}`;
+      setActiveCategory(category);
+      setActiveSubcategory(product);
+      setExpandedSubcategories((prev) =>
+        prev.includes(subcategoryKey) ? prev : [...prev, subcategoryKey],
+      );
 
-    // Ensure the parent category is expanded
-    if (!expandedCategories.includes(category.id)) {
-      setExpandedCategories((prev) => [...prev, category.id]);
-    }
+      // Ensure the parent category is expanded
+      if (!expandedCategories.includes(category.id)) {
+        setExpandedCategories((prev) => [...prev, category.id]);
+      }
 
-    if (isMobile) {
-      setIsMobileMenuOpen(false);
-    }
-    setExpandedTables({});
+      if (isMobile) {
+        setIsMobileMenuOpen(false);
+      }
+      setExpandedTables({});
+    });
   };
 
   const getCategoryColors = (categoryId) => {
@@ -306,7 +335,7 @@ const IPCProductsTable = () => {
                     return (
                       <td
                         key={colIndex}
-                        className="px-4 py-3 text-sm text-gray-900 border-r border-gray-200 last:border-r-0 whitespace-nowrap"
+                        className="px-4 py-3 text-sm text-gray-900 border-r border-gray-200 last:border-r-0 whitespace-normal break-words align-top"
                       >
                         {cellContent}
                       </td>
@@ -427,19 +456,164 @@ const IPCProductsTable = () => {
               key={rowIndex}
               className="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm hover:shadow-md transition-shadow"
             >
-              <div className="mb-2">
-                <h4 className="font-bold text-gray-900 text-base mb-1">
-                  {row.feature}
-                </h4>
-              </div>
+              {row.image && (
+                <div className="mb-3 bg-gray-50 rounded-lg p-3 flex justify-center">
+                  <img
+                    src={row.image}
+                    alt={row.name || row.code || "Specification"}
+                    className="max-h-28 object-contain"
+                  />
+                </div>
+              )}
 
-              <div className="bg-gray-50 rounded-lg p-3">
-                <p className="text-gray-700 whitespace-pre-line text-sm">
-                  {row.specification}
-                </p>
+              <div className="space-y-2">
+                {specifications.headers.map((header, headerIndex) => {
+                  const headerKey = header.toLowerCase().replace(/[^a-z]/g, "");
+                  let cellContent = "";
+
+                  if (headerKey === "productcode" && row.code) {
+                    cellContent = row.code;
+                  } else if (headerKey === "name" && row.name) {
+                    cellContent = row.name;
+                  } else if (
+                    headerKey === "sterilizationprocess" &&
+                    row.process
+                  ) {
+                    cellContent = row.process;
+                  } else if (headerKey === "readouttime" && row.readout) {
+                    cellContent = row.readout;
+                  } else if (headerKey === "keyfeature" && row.feature) {
+                    cellContent = row.feature;
+                  } else if (row[headerKey]) {
+                    cellContent = row[headerKey];
+                  } else {
+                    const key = Object.keys(row).find((key) =>
+                      key.toLowerCase().includes(headerKey.slice(0, 3)),
+                    );
+                    cellContent = key ? row[key] : "";
+                  }
+
+                  if (!cellContent) return null;
+
+                  return (
+                    <div
+                      key={headerIndex}
+                      className="bg-gray-50 rounded-lg p-3 border border-gray-100"
+                    >
+                      <p className="text-xs font-semibold text-gray-500 uppercase mb-1">
+                        {header}
+                      </p>
+                      <p className="text-gray-800 whitespace-pre-line text-sm">
+                        {cellContent}
+                      </p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           ))}
+        </div>
+      </div>
+    );
+  };
+
+  const getSpecCellContent = (row, header) => {
+    const headerKey = header.toLowerCase().replace(/[^a-z]/g, "");
+
+    if (headerKey === "productcode" && row.code) return row.code;
+    if (headerKey === "name" && row.name) return row.name;
+    if (headerKey === "sterilizationprocess" && row.process) return row.process;
+    if (headerKey === "readouttime" && row.readout) return row.readout;
+    if (headerKey === "keyfeature" && row.feature) return row.feature;
+    if (row[headerKey]) return row[headerKey];
+
+    const key = Object.keys(row).find((key) =>
+      key.toLowerCase().includes(headerKey.slice(0, 3)),
+    );
+    return key ? row[key] : "";
+  };
+
+  const renderSpecificationsDropdown = (product, colors) => {
+    const rows = product?.specifications?.rows || [];
+    if (rows.length === 0) return null;
+
+    return (
+      <div className="mb-6">
+        <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <Table className={`w-5 h-5 ${colors.icon}`} />
+          Technical Specifications
+        </h3>
+        <div className="space-y-3">
+          {rows.map((row, rowIndex) => {
+            const rowKey = `${product.id}-${rowIndex}`;
+            const isOpen = expandedSpecRows[rowKey] ?? false;
+
+            return (
+              <div
+                key={rowKey}
+                className="border border-gray-200 rounded-xl bg-white shadow-sm overflow-hidden"
+              >
+                <button
+                  type="button"
+                  onClick={() =>
+                    setExpandedSpecRows((prev) => ({
+                      ...prev,
+                      [rowKey]: !(prev[rowKey] ?? false),
+                    }))
+                  }
+                  className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm font-bold text-red-700 bg-red-50 px-2.5 py-1 rounded-md">
+                      {row.code || `Item ${rowIndex + 1}`}
+                    </span>
+                    <span className="font-semibold text-gray-900">
+                      {row.name || "Specification"}
+                    </span>
+                  </div>
+                  <ChevronDown
+                    className={`w-5 h-5 text-gray-600 transition-transform ${
+                      isOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {isOpen && (
+                  <div className="px-4 pb-4 border-t border-gray-100">
+                    {row.image && (
+                      <div className="mt-4 mb-4 bg-gray-50 rounded-lg p-4 flex justify-center">
+                        <img
+                          src={row.image}
+                          alt={row.name || row.code || "Product"}
+                          className="h-36 md:h-44 w-auto object-contain"
+                        />
+                      </div>
+                    )}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {product.specifications.headers.map((header, headerIndex) => {
+                        const value = getSpecCellContent(row, header);
+                        if (!value) return null;
+
+                        return (
+                          <div
+                            key={headerIndex}
+                            className="bg-gray-50 rounded-lg p-3 border border-gray-100"
+                          >
+                            <p className="text-xs font-semibold text-gray-500 uppercase mb-1">
+                              {header}
+                            </p>
+                            <p className="text-sm text-gray-900 whitespace-pre-line">
+                              {value}
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     );
@@ -519,7 +693,9 @@ const IPCProductsTable = () => {
 
           {/* Specifications Section - Updated for mobile */}
           {product.specifications &&
-            (isMobile && viewMode === "cards" ? (
+            (product.id === "superfast-bi-system" ? (
+              renderSpecificationsDropdown(product, colors)
+            ) : isMobile && viewMode === "cards" ? (
               renderSpecificationsCards(product.specifications, colors)
             ) : (
               <div className="mb-6">
@@ -550,12 +726,32 @@ const IPCProductsTable = () => {
                             rowIndex % 2 === 0 ? "bg-white" : "bg-gray-50/50"
                           }`}
                         >
-                          <td className="px-4 py-3 text-sm font-medium text-gray-900 border-r border-gray-200 whitespace-nowrap">
-                            {row.feature}
-                          </td>
-                          <td className="px-4 py-3 text-sm text-gray-900 whitespace-pre-line">
-                            {row.specification}
-                          </td>
+                          {product.specifications.headers.map((header, colIndex) => {
+                              const cellContent = getSpecCellContent(row, header);
+
+                              return (
+                                <td
+                                  key={colIndex}
+                                  className={`px-4 py-3 text-sm text-gray-900 border-r border-gray-200 last:border-r-0 ${
+                                    colIndex === 0 ? "font-medium" : ""
+                                  }`}
+                                >
+                                  <div className="flex items-center gap-2">
+                                    {colIndex === 0 && row.image && (
+                                      <img
+                                        src={row.image}
+                                        alt={row.name || row.code || "Product"}
+                                        className="w-10 h-10 object-contain rounded bg-white border border-gray-200 p-1"
+                                      />
+                                    )}
+                                    <span className="whitespace-pre-line">
+                                      {cellContent}
+                                    </span>
+                                  </div>
+                                </td>
+                              );
+                            },
+                          )}
                         </tr>
                       ))}
                     </tbody>
@@ -990,14 +1186,30 @@ const IPCProductsTable = () => {
     return (
       <div className="mt-2 space-y-2" onClick={(e) => e.stopPropagation()}>
         {category.subcategories?.map((subcategory) => {
-          const isSubActive = activeSubcategory?.id === subcategory.id;
+          const subcategoryKey = `${category.id}::${subcategory.id}`;
+          const hasActiveChild = subcategory.subcategories?.some(
+            (product) => product.id === activeSubcategory?.id,
+          );
+          const isSubActive =
+            activeSubcategory?.id === subcategory.id || hasActiveChild;
+          const isSubExpanded =
+            expandedSubcategories.includes(subcategoryKey) || isSubActive;
 
           return (
             <div key={subcategory.id}>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleSubcategoryClick(category, subcategory, e);
+                  if (isSubExpanded) {
+                    setExpandedSubcategories((prev) =>
+                      prev.filter((key) => key !== subcategoryKey),
+                    );
+                    if (activeSubcategory?.id === subcategory.id) {
+                      setActiveSubcategory(null);
+                    }
+                  } else {
+                    handleSubcategoryClick(category, subcategory, e);
+                  }
                 }}
                 className={`w-full text-left p-3 rounded-xl transition-all ${
                   isSubActive
@@ -1028,7 +1240,7 @@ const IPCProductsTable = () => {
               </button>
 
               {/* Render products for this subcategory */}
-              {isSubActive && subcategory.subcategories?.length > 0 && (
+              {isSubExpanded && subcategory.subcategories?.length > 0 && (
                 <div className="ml-8 mt-2 space-y-2 border-l-2 border-gray-200 pl-3">
                   {subcategory.subcategories.map((product) => {
                     const isProductActive =
@@ -1285,6 +1497,7 @@ const IPCProductsTable = () => {
                           setActiveCategory(null);
                           setActiveSubcategory(null);
                           setExpandedCategories([]);
+                          setExpandedSubcategories([]);
                         }}
                         className="text-sm bg-gradient-to-r from-red-50 to-red-100 text-red-600 hover:text-red-700 px-3 py-1 rounded-lg"
                       >
@@ -1410,6 +1623,7 @@ const IPCProductsTable = () => {
                         setActiveCategory(null);
                         setActiveSubcategory(null);
                         setExpandedCategories([]);
+                        setExpandedSubcategories([]);
                         setExpandedTables({});
                       }}
                       className="w-full text-center p-4 border-2 border-gray-300 text-gray-700 font-bold rounded-2xl hover:bg-gray-50 transition"
@@ -1450,6 +1664,7 @@ const IPCProductsTable = () => {
                         setActiveCategory(null);
                         setActiveSubcategory(null);
                         setExpandedCategories([]);
+                        setExpandedSubcategories([]);
                         setExpandedTables({});
                       }}
                       className="text-sm bg-gradient-to-r from-red-50 to-red-100 text-red-600 hover:text-red-700 px-3 py-1 rounded-lg"
@@ -1605,6 +1820,7 @@ const IPCProductsTable = () => {
                   setActiveCategory(null);
                   setActiveSubcategory(null);
                   setExpandedCategories([]);
+                  setExpandedSubcategories([]);
                   setExpandedTables({});
                 }}
                 className="flex flex-col items-center gap-1 text-rose-600 hover:text-rose-700 transition"

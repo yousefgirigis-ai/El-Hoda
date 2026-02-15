@@ -580,7 +580,9 @@ const Header = () => {
               <span className="text-[#d71920] text-xs">Let's Talk</span>
               <div className="flex items-center">
                 <Phone size={16} className="text-[#d71920] mr-2" />
-                <span>+2 20228581555</span>
+                <a href="tel:+20228581555" className="hover:text-[#d71920] transition-colors">
+                  +2 20228581555
+                </a>
               </div>
             </div>
 

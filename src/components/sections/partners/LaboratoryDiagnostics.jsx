@@ -58,13 +58,71 @@ const LaboratoryDiagnostics = () => {
   };
 
   const handleDownload = (partnerName) => {
-    // Create a filename from the partner name
+    if (partnerName === "ACON") {
+      const link = document.createElement("a");
+      link.href =
+        "https://drive.google.com/uc?export=download&id=1Smjrn0XvKdFkIx7AeTI173Qucpp4vUAY";
+      link.rel = "noopener noreferrer";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setTimeout(() => {
+        handleClosePopup();
+      }, 1000);
+
+      return;
+    }
+
+    if (partnerName === "Assure Tech") {
+      const link = document.createElement("a");
+      link.href =
+        "https://drive.google.com/uc?export=download&id=13FkUdyMSA72D36FYaWgdPSzO6sMipKq0";
+      link.rel = "noopener noreferrer";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setTimeout(() => {
+        handleClosePopup();
+      }, 1000);
+
+      return;
+    }
+
+    if (partnerName === "i-SENS") {
+      const link = document.createElement("a");
+      link.href =
+        "https://drive.google.com/uc?export=download&id=1W0fSycjMjuhuoKRJ1cuSdhBAiIDe_54b";
+      link.rel = "noopener noreferrer";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setTimeout(() => {
+        handleClosePopup();
+      }, 1000);
+
+      return;
+    }
+
+    if (partnerName === "Greiner Bio-One") {
+      const link = document.createElement("a");
+      link.href =
+        "https://drive.google.com/uc?export=download&id=1lGetRtNfVhYjRev86Col_SAU9K0TIchc";
+      link.rel = "noopener noreferrer";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setTimeout(() => {
+        handleClosePopup();
+      }, 1000);
+
+      return;
+    }
     const filename = `${partnerName.replace(/\s+/g, '_')}_Portfolio.pdf`;
-    
-    // Create a dummy PDF content (in real implementation, this would be an actual PDF file)
-    // For demo purposes, we'll create a text file instead
     const content = `${partnerName} Portfolio\n\nThis is a sample portfolio document for ${partnerName}.\nIn a production environment, this would be an actual PDF file.`;
-    
     const blob = new Blob([content], { type: 'application/pdf' });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -74,8 +132,6 @@ const LaboratoryDiagnostics = () => {
     link.click();
     document.body.removeChild(link);
     window.URL.revokeObjectURL(url);
-    
-    // Close popup after download starts
     setTimeout(() => {
       handleClosePopup();
     }, 1000);

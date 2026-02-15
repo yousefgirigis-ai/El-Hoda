@@ -58,13 +58,74 @@ const ClinicalChemistryHematology = () => {
   };
 
   const handleDownload = (partnerName) => {
-    // Create a filename from the partner name
+    if (partnerName === "NeoMedica" || partnerName === "NeoMedic") {
+      const link = document.createElement("a");
+      link.href =
+        "https://drive.google.com/uc?export=download&id=1H_v-lQPLt6bFM33aoglZBPgzGO1AfnjQ";
+      link.rel = "noopener noreferrer";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setTimeout(() => {
+        closePortfolioModal();
+      }, 1000);
+
+      return;
+    }
+
+    if (partnerName === "Drawray") {
+      const link = document.createElement("a");
+      link.href =
+        "https://drive.google.com/uc?export=download&id=1bcvMwwsraYlQ4teduAahDsyQan9cNqxZ";
+      link.rel = "noopener noreferrer";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setTimeout(() => {
+        closePortfolioModal();
+      }, 1000);
+
+      return;
+    }
+
+    if (partnerName === "Dymind") {
+      const link = document.createElement("a");
+      link.href =
+        "https://drive.google.com/uc?export=download&id=1pp1idaJba90xNTAR8audSBGZ9mTT5ZEu";
+      link.rel = "noopener noreferrer";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setTimeout(() => {
+        closePortfolioModal();
+      }, 1000);
+
+      return;
+    }
+
+    if (partnerName === "URIT") {
+      const link = document.createElement("a");
+      link.href =
+        "https://drive.google.com/uc?export=download&id=1Z2ZVhdjUzT_0XYaNcCa2CdskTbsSaRXE";
+      link.rel = "noopener noreferrer";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setTimeout(() => {
+        closePortfolioModal();
+      }, 1000);
+
+      return;
+    }
+
+
     const filename = `${partnerName.replace(/\s+/g, '_')}_Portfolio.pdf`;
-    
-    // Create a dummy PDF content (in real implementation, this would be an actual PDF file)
-    // For demo purposes, we'll create a text file instead
+
     const content = `${partnerName} Portfolio\n\nThis is a sample portfolio document for ${partnerName}.\nIn a production environment, this would be an actual PDF file.`;
-    
     const blob = new Blob([content], { type: 'application/pdf' });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');

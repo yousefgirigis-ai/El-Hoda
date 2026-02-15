@@ -16,6 +16,29 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 const InfectionControlResearch = () => {
+  const oxyPharmCatalogs = [
+    {
+      label: "Glosair Brochure",
+      fileId: "18AHq6J-5_CGdSYZa1tlAfS06yqbLXKOT",
+    },
+    {
+      label: "SANIVAP",
+      fileId: "1tf5gEMaFeunrAHcDvO6UzBh0DFMMQPCh",
+    },
+    {
+      label: "AIREL QUETIN",
+      fileId: "1tmmENEDPp58ej3YrEtiLffv-egxsi3mJ",
+    },
+    {
+      label: "OXYPHARM",
+      fileId: "1tJn63W8wWo6kYwGMu1htZ13AlY3ySgYK",
+    },
+    {
+      label: "NOCO TECH",
+      fileId: "1knlm-pvIvwlMhPIuciSI4wgDsFeAdvcW",
+    },
+  ];
+
   const navigate = useNavigate();
   const [, setIsAtTop] = React.useState(true);
   const [activePartner, setActivePartner] = React.useState(null);
@@ -57,7 +80,36 @@ const InfectionControlResearch = () => {
     setSelectedPartner(null);
   };
 
+  const triggerDriveDownload = (fileId) => {
+    const link = document.createElement("a");
+    link.href = `https://drive.google.com/uc?export=download&id=${fileId}`;
+    link.rel = "noopener noreferrer";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const handleDownload = (partnerName) => {
+    if (partnerName === "Medentech") {
+      triggerDriveDownload("1LN04yJHPnbiG5YC9xoF0YfvsXhuq1HFD");
+
+      setTimeout(() => {
+        closePortfolioModal();
+      }, 1000);
+
+      return;
+    }
+
+    if (partnerName === "ParaSure" || partnerName === "GHP International") {
+      triggerDriveDownload("1pb6wlbfz3MLHwEpbHhVtZQgVlmzfaRZW");
+
+      setTimeout(() => {
+        closePortfolioModal();
+      }, 1000);
+
+      return;
+    }
+
     // Create a filename from the partner name
     const filename = `${partnerName.replace(/\s+/g, '_')}_Portfolio.pdf`;
     
@@ -631,26 +683,52 @@ const InfectionControlResearch = () => {
                     Download the complete portfolio for {selectedPartner.name} to learn more about their products, services, and innovative solutions.
                   </p>
 
-                  <div className="flex gap-3">
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => handleDownload(selectedPartner.name)}
-                      className="flex-1 bg-gradient-to-r from-red-600 to-red-500 text-white py-3 px-4 rounded-xl font-medium hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
-                    >
-                      <Download className="w-4 h-4" />
-                      Download Portfolio
-                    </motion.button>
-                    
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={closePortfolioModal}
-                      className="px-4 py-3 border border-gray-300 rounded-xl font-medium text-gray-700 hover:bg-gray-50 transition-colors duration-300"
-                    >
-                      Cancel
-                    </motion.button>
-                  </div>
+                  {selectedPartner.name === "Oxy'Pharm" ? (
+                    <div className="space-y-3">
+                      {oxyPharmCatalogs.map((catalog) => (
+                        <motion.button
+                          key={catalog.fileId}
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          onClick={() => triggerDriveDownload(catalog.fileId)}
+                          className="w-full bg-gradient-to-r from-red-600 to-red-500 text-white py-3 px-4 rounded-xl font-medium hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+                        >
+                          <Download className="w-4 h-4" />
+                          {catalog.label}
+                        </motion.button>
+                      ))}
+
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={closePortfolioModal}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl font-medium text-gray-700 hover:bg-gray-50 transition-colors duration-300"
+                      >
+                        Close
+                      </motion.button>
+                    </div>
+                  ) : (
+                    <div className="flex gap-3">
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => handleDownload(selectedPartner.name)}
+                        className="flex-1 bg-gradient-to-r from-red-600 to-red-500 text-white py-3 px-4 rounded-xl font-medium hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+                      >
+                        <Download className="w-4 h-4" />
+                        Download Portfolio
+                      </motion.button>
+
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={closePortfolioModal}
+                        className="px-4 py-3 border border-gray-300 rounded-xl font-medium text-gray-700 hover:bg-gray-50 transition-colors duration-300"
+                      >
+                        Cancel
+                      </motion.button>
+                    </div>
+                  )}
                 </div>
               </motion.div>
             </div>

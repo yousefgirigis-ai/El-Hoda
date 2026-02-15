@@ -7176,7 +7176,7 @@ export const ipcCategories = [
             icon: Cpu,
             bgColor: "bg-blue-100",
             type: "product",
-            image: "/ipc/helix-device.png",
+            image: "/helix-device.png",
             features: [
               "Daily testing for all Type B vacuum-assisted steam sterilizers",
               "ISO 13060 compliance for hollow load testing",
@@ -7249,7 +7249,7 @@ export const ipcCategories = [
             icon: FlaskConical,
             bgColor: "bg-green-100",
             type: "product",
-            image: "/ipc/scbi-steam.png",
+            image: "/superfast-bi.png",
             features: [
               "Contains Geobacillus stearothermophilus (ATCC 7953) at 10⁶ population",
               "Self-contained sealed glass ampoule with culture medium",
@@ -7315,7 +7315,7 @@ export const ipcCategories = [
             icon: Thermometer,
             bgColor: "bg-green-100",
             type: "product",
-            image: "/ipc/ps1930-incubator.png",
+            image: "/ps1930-incubator.png",
             features: [
               "Switchable temperatures for EO (37°C) and Steam (60°C) BIs",
               "21 metal positions for biological indicators",
@@ -7367,7 +7367,6 @@ export const ipcCategories = [
             icon: Zap,
             bgColor: "bg-green-100",
             type: "product",
-            image: "/superfast-bi.png",
             features: [
               "20-minute readout time for rapid results",
               "Barcode for reader traceability",
@@ -7387,6 +7386,7 @@ export const ipcCategories = [
                 {
                   code: "PS 1950",
                   name: "Superfast BI",
+                  image: "/scbi-steam.png",
                   process: "Steam (132°C, 134°C, 135°C pre-vacuum and 121°C)",
                   readout: "20 minutes",
                   feature: "Each BI has a barcode for reader traceability",
@@ -7394,6 +7394,7 @@ export const ipcCategories = [
                 {
                   code: "PS 1960",
                   name: "Superfast BI",
+                  image: "/superfast.png",
                   process: "Vaporised Hydrogen Peroxide (VH₂O₂)",
                   readout: "20 minutes",
                   feature: "Can be used in all VH₂O₂ sterilization cycles",
@@ -7401,6 +7402,7 @@ export const ipcCategories = [
                 {
                   code: "PS 1995",
                   name: "Rapid Challenge Steam Test Pack",
+                  image: "/rapid-challenge-steam.png",
                   process: "Steam",
                   readout: "20 minutes",
                   feature:
@@ -7477,7 +7479,7 @@ export const ipcCategories = [
             icon: Smartphone,
             bgColor: "bg-green-100",
             type: "product",
-            image: "/ipc/mini-autoreader.png",
+            image: "/mini-autoreader.png",
             features: [
               "Spectrum analysis technology for fluorescence monitoring",
               "Adjustable temperature control (58°C or 37°C)",
@@ -7699,7 +7701,7 @@ export const ipcCategories = [
         icon: Printer,
         bgColor: "bg-purple-100",
         type: "product",
-        image: "/ipc/duplex-label.png",
+        image: "/duplex-label.png",
         features: [
           "Duplex label for effective sterilization process record keeping",
           "Clear color change from pink to brown for steam",
@@ -7761,7 +7763,7 @@ export const ipcCategories = [
         icon: Waves,
         bgColor: "bg-purple-100",
         type: "product",
-        image: "/ipc/cavicheck.png",
+        image: "/cavicheck.png",
         features: [
           "Immediate results via colour change",
           "Detects sufficient energy for cavitation",
@@ -7897,7 +7899,6 @@ export const ipcCategories = [
         icon: Droplet,
         bgColor: "bg-amber-100",
         type: "product",
-        image: "/ipc/parazyme.png",
         features: [
           "Neutral pH formulation gentle on instruments",
           "Compatible with all types of materials",

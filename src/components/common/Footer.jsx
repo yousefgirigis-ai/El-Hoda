@@ -69,9 +69,8 @@ const SOCIAL_LINKS = [
 ];
 
 const LEGAL_LINKS = [
-  { label: "Privacy Policy", href: "#" },
-  { label: "Terms of Service", href: "#" },
-  { label: "Cookie Policy", href: "#" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms of Service", href: "/terms-of-service" },
 ];
 
 // Sub-components for better organization
@@ -373,7 +372,7 @@ const Footer = () => {
           {/* CONNECT & SOCIAL SECTION */}
           <div className="lg:col-span-4 space-y-8">
             {/* Email */}
-            <div className="pt-4">
+            <div>
               <ContactInfo
                 icon={Mail}
                 title="Email Address"

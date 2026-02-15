@@ -48,6 +48,8 @@ import ApplicationSupportTraining from "./pages/services/ApplicationSupportTrain
 import PartnerDetails from "./pages/PartnerDetails";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import CompanyDetailPage from "./components/sections/CompanyDetailPage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 
 /* ================= UI ================= */
 import { Toaster } from "react-hot-toast";
@@ -470,6 +472,24 @@ const App = () => {
           element={
             <LayoutWrapper>
               <PartnerDetails />
+            </LayoutWrapper>
+          }
+        />
+
+        {/* LEGAL PAGES */}
+        <Route
+          path="/privacy-policy"
+          element={
+            <LayoutWrapper>
+              <PrivacyPolicy />
+            </LayoutWrapper>
+          }
+        />
+        <Route
+          path="/terms-of-service"
+          element={
+            <LayoutWrapper>
+              <TermsOfService />
             </LayoutWrapper>
           }
         />

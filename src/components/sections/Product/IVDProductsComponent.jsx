@@ -59,6 +59,7 @@ const IVDReagentsTable = () => {
   const [viewMode, setViewMode] = useState("table");
   const sidebarRef = useRef(null);
   const mobileMenuRef = useRef(null);
+  const instrumentDetailsRef = useRef(null);
 
   // Hematology specific states
   const [activeHematologyTab, setActiveHematologyTab] = useState("products");
@@ -224,12 +225,20 @@ const IVDReagentsTable = () => {
   const preserveScroll = (ref, updateFn) => {
     const el = ref.current;
     const top = el ? el.scrollTop : 0;
+    const pageTop = window.scrollY;
     updateFn();
-    if (el) {
-      requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: pageTop, behavior: "auto" });
+      if (el) {
         el.scrollTop = top;
-      });
-    }
+      }
+    });
+  };
+
+  const keepCategoryExpanded = (categoryId) => {
+    setExpandedCategories((prev) =>
+      prev.includes(categoryId) ? prev : [...prev, categoryId],
+    );
   };
 
   // Handle individual hematology brand click
@@ -245,7 +254,7 @@ const IVDReagentsTable = () => {
     });
     setActiveSubcategory(brand);
     setActiveHematologyInstrument(null);
-    setExpandedCategories(["hematology-reagents"]);
+    keepCategoryExpanded("hematology-reagents");
     setActiveHematologyTab("products");
     setSearchTerm("");
 
@@ -268,7 +277,7 @@ const IVDReagentsTable = () => {
     });
     setActiveHematologyInstrument(instrument);
     setActiveSubcategory(null);
-    setExpandedCategories(["hematology-instrumentation"]);
+    keepCategoryExpanded("hematology-instrumentation");
     setActiveInstrumentTab("overview");
 
     if (isMobile) {
@@ -280,9 +289,7 @@ const IVDReagentsTable = () => {
     setActiveCategory(category);
     setActiveSubcategory(subcategory);
     setActiveHematologyInstrument(null);
-    if (!expandedCategories.includes(category.id)) {
-      setExpandedCategories([category.id]);
-    }
+    keepCategoryExpanded(category.id);
     if (isMobile) {
       setIsMobileMenuOpen(false);
     }
@@ -294,9 +301,7 @@ const IVDReagentsTable = () => {
     setActiveCategory(category);
     setActiveSubcategory(instrument);
     setActiveHematologyInstrument(null);
-    if (!expandedCategories.includes(category.id)) {
-      setExpandedCategories([category.id]);
-    }
+    keepCategoryExpanded(category.id);
     if (isMobile) {
       setIsMobileMenuOpen(false);
     }
@@ -308,9 +313,7 @@ const IVDReagentsTable = () => {
     setActiveCategory(category);
     setActiveSubcategory(subSubcategory);
     setActiveHematologyInstrument(null);
-    if (!expandedCategories.includes(category.id)) {
-      setExpandedCategories([category.id]);
-    }
+    keepCategoryExpanded(category.id);
     if (isMobile) {
       setIsMobileMenuOpen(false);
     }
@@ -323,6 +326,21 @@ const IVDReagentsTable = () => {
       ...prev,
       [tableId]: !prev[tableId],
     }));
+  };
+
+  const handleInstrumentTabChange = (tabId) => {
+    setActiveInstrumentTab(tabId);
+
+    requestAnimationFrame(() => {
+      if (instrumentDetailsRef.current) {
+        const rect = instrumentDetailsRef.current.getBoundingClientRect();
+        const offsetTop = window.scrollY + rect.top - 100;
+        window.scrollTo({
+          top: offsetTop < 0 ? 0 : offsetTop,
+          behavior: "smooth",
+        });
+      }
+    });
   };
 
   const getCategoryColors = (categoryId) => {
@@ -1937,6 +1955,7 @@ const IVDReagentsTable = () => {
     }
 
     const isExpanded = expandedTables[tableId];
+    const hasRowNotes = tableData.rows.some((row) => row.note);
     const colors = getCategoryColors(
       activeSubcategory?.id || activeCategory?.id,
     );
@@ -1959,11 +1978,6 @@ const IVDReagentsTable = () => {
                 {tableName}
               </h3>
               <div className="flex items-center gap-2 mt-1">
-                <span
-                  className={`text-xs px-2 py-1 ${colors.light} ${colors.text} rounded-full font-medium`}
-                >
-                  {tableData.rows.length} items
-                </span>
                 <span className="text-xs text-gray-500 hidden sm:inline">
                   Click to {isExpanded ? "collapse" : "expand"}
                 </span>
@@ -2000,7 +2014,7 @@ const IVDReagentsTable = () => {
                           {header}
                         </th>
                       ))}
-                      {tableData.rows.some((row) => row.note) && (
+                      {hasRowNotes && (
                         <th className="px-4 py-3 text-left text-xs font-bold text-gray-900 uppercase tracking-wider whitespace-nowrap">
                           NOTES
                         </th>
@@ -2009,6 +2023,19 @@ const IVDReagentsTable = () => {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {tableData.rows.map((row, rowIndex) => (
+                      row.isHeader ? (
+                        <tr
+                          key={rowIndex}
+                          className="bg-gradient-to-r from-rose-50 to-pink-50"
+                        >
+                          <td
+                            colSpan={tableData.headers.length + (hasRowNotes ? 1 : 0)}
+                            className="px-4 py-3 text-sm font-bold text-rose-900 uppercase"
+                          >
+                            {row.productName || row.name || "Section"}
+                          </td>
+                        </tr>
+                      ) : (
                       <tr
                         key={rowIndex}
                         className={`hover:bg-gray-50 transition-colors ${
@@ -2044,22 +2071,36 @@ const IVDReagentsTable = () => {
                               cellContent = row.r2 || "";
                               break;
                             default:
-                              cellContent =
-                                row[
-                                  header.toLowerCase().replace(/[^a-z]/g, "")
-                                ] || "";
+                              {
+                                const normalizedHeader = header
+                                  .toLowerCase()
+                                  .replace(/[^a-z0-9]/g, "");
+                                const matchedKey = Object.keys(row).find(
+                                  (key) => {
+                                    const normalizedKey = key
+                                      .toLowerCase()
+                                      .replace(/[^a-z0-9]/g, "");
+                                    return (
+                                      normalizedKey === normalizedHeader ||
+                                      normalizedKey.includes(normalizedHeader) ||
+                                      normalizedHeader.includes(normalizedKey)
+                                    );
+                                  },
+                                );
+                                cellContent = matchedKey ? row[matchedKey] : "";
+                              }
                           }
 
                           return (
                             <td
                               key={colIndex}
-                              className="px-4 py-3 text-sm text-gray-900 border-r border-gray-200 last:border-r-0 whitespace-nowrap"
+                              className="px-4 py-3 text-sm text-gray-900 border-r border-gray-200 last:border-r-0 whitespace-normal break-words"
                             >
                               {cellContent}
                             </td>
                           );
                         })}
-                        {tableData.rows.some((r) => r.note) && (
+                        {hasRowNotes && (
                           <td className="px-4 py-3 text-sm text-gray-600 max-w-xs">
                             {row.note && (
                               <div className="flex items-start">
@@ -2072,6 +2113,7 @@ const IVDReagentsTable = () => {
                           </td>
                         )}
                       </tr>
+                      )
                     ))}
                   </tbody>
                 </table>
@@ -2632,7 +2674,10 @@ const IVDReagentsTable = () => {
           </div>
 
           {/* Instrument Details Card */}
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200">
+          <div
+            ref={instrumentDetailsRef}
+            className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200"
+          >
             {/* Header with Image */}
             <div className="relative h-64 md:h-80 overflow-hidden bg-white">
               <img
@@ -2665,7 +2710,7 @@ const IVDReagentsTable = () => {
                   return (
                     <button
                       key={tab.id}
-                      onClick={() => setActiveInstrumentTab(tab.id)}
+                      onClick={() => handleInstrumentTabChange(tab.id)}
                       className={`
                         flex items-center gap-2 px-6 py-4 text-sm font-medium whitespace-nowrap
                         ${
@@ -2731,96 +2776,23 @@ const IVDReagentsTable = () => {
                 </div>
               </div>
 
-              {/* Products Table */}
-              <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-                <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
-                      <tr>
-                        {activeSubcategory.tableData.headers.map(
-                          (header, index) => (
-                            <th
-                              key={index}
-                              scope="col"
-                              className="px-6 py-4 text-left text-xs font-bold text-gray-900 uppercase tracking-wider"
-                            >
-                              {header}
-                            </th>
-                          ),
-                        )}
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      {activeSubcategory.tableData.rows.map((row, rowIndex) => {
-                        if (row.isHeader) {
-                          return (
-                            <tr
-                              key={rowIndex}
-                              className="bg-gradient-to-r from-rose-50 to-pink-50"
-                            >
-                              <td
-                                colSpan={
-                                  activeSubcategory.tableData.headers.length
-                                }
-                                className="px-6 py-4 text-sm font-bold text-rose-900 uppercase"
-                              >
-                                {row.productName}
-                              </td>
-                            </tr>
-                          );
-                        }
-
-                        // Filter logic if search term exists
-                        if (searchTerm) {
-                          const searchLower = searchTerm.toLowerCase();
-                          const matches =
-                            row.productName
-                              ?.toLowerCase()
-                              .includes(searchLower) ||
-                            row.catalogNumber
-                              ?.toLowerCase()
-                              .includes(searchLower) ||
-                            row.analyte?.toLowerCase().includes(searchLower);
-                          if (!matches) return null;
-                        }
-
-                        return (
-                          <tr
-                            key={rowIndex}
-                            className="hover:bg-gray-50 transition-colors"
-                          >
-                            <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                              {row.productName}
-                            </td>
-                            <td className="px-6 py-4">
-                              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-rose-100 text-rose-800">
-                                {row.catalogNumber}
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 text-sm text-gray-700">
-                              {row.analyte}
-                            </td>
-                            <td className="px-6 py-4 text-sm text-gray-700">
-                              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                {row.reagentForm}
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 text-sm text-gray-700">
-                              {row.packSize}
-                            </td>
-                            <td className="px-6 py-4 text-sm font-medium text-green-600">
-                              <div className="flex items-center gap-2">
-                                <Clock className="w-4 h-4" />
-                                {row.shelfLife}
-                              </div>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+              {/* Products Table as Dropdown */}
+              {renderCollapsibleTable(
+                {
+                  ...activeSubcategory.tableData,
+                  rows: activeSubcategory.tableData.rows.filter((row) => {
+                    if (row.isHeader || !searchTerm) return true;
+                    const searchLower = searchTerm.toLowerCase();
+                    return (
+                      row.productName?.toLowerCase().includes(searchLower) ||
+                      row.catalogNumber?.toLowerCase().includes(searchLower) ||
+                      row.analyte?.toLowerCase().includes(searchLower)
+                    );
+                  }),
+                },
+                `${activeSubcategory.name.split(") ")[1] || activeSubcategory.name} Products`,
+                `hematology-${activeSubcategory.id}`,
+              )}
             </div>
           );
 
@@ -2868,7 +2840,7 @@ const IVDReagentsTable = () => {
                 Important Notes & Information
               </h3>
 
-              {activeSubcategory.tableData?.note && (
+              {activeSubcategory.tableData?.note ? (
                 <div className="bg-gradient-to-br from-rose-50 to-pink-50 rounded-xl border border-rose-200 p-6">
                   <div className="flex items-start gap-4">
                     <AlertCircle className="w-6 h-6 text-rose-500 mt-1 flex-shrink-0" />
@@ -2878,6 +2850,18 @@ const IVDReagentsTable = () => {
                       </h4>
                       <p className="text-gray-700">
                         {activeSubcategory.tableData.note}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-gray-50 rounded-xl border border-gray-200 p-6">
+                  <div className="flex items-start gap-4">
+                    <Info className="w-6 h-6 text-gray-500 mt-1 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-2">No Notes</h4>
+                      <p className="text-gray-600">
+                        No additional notes are available for this hematology category.
                       </p>
                     </div>
                   </div>
@@ -2960,11 +2944,6 @@ const IVDReagentsTable = () => {
                     <ChevronRight className={`w-5 h-5 ${colors.icon}`} />
                   </div>
                   <div className="flex items-center gap-2 mt-4">
-                    <span
-                      className={`text-xs px-3 py-1 ${colors.light} ${colors.text} rounded-full font-medium`}
-                    >
-                      {brand.totalProducts} products
-                    </span>
                     <span className="text-xs px-3 py-1 bg-rose-100 text-rose-700 rounded-full font-medium">
                       Liquid Stable
                     </span>
@@ -3034,10 +3013,7 @@ const IVDReagentsTable = () => {
 
           <div className="flex items-center gap-4 mt-4">
             <div className="flex items-center gap-2">
-              <Package className={`w-4 h-4 md:w-5 md:h-5 ${colors.icon}`} />
-              <span className="text-xs md:text-sm text-gray-600">
-                {activeSubcategory.totalProducts} products
-              </span>
+
             </div>
             <div className="flex items-center gap-2">
               <Shield className={`w-4 h-4 md:w-5 md:h-5 ${colors.icon}`} />
@@ -3474,13 +3450,7 @@ const IVDReagentsTable = () => {
                     >
                       {subSubcategory.subcategories?.length || 0} tables
                     </span>
-                    {subSubcategory.tableData && (
-                      <span
-                        className={`text-xs px-3 py-1 ${subSubColors.light} ${subSubColors.text} rounded-full font-medium`}
-                      >
-                        {subSubcategory.tableData.rows.length} items
-                      </span>
-                    )}
+
                   </div>
                 </button>
               );
@@ -3555,17 +3525,6 @@ const IVDReagentsTable = () => {
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <Grid className={`w-4 h-4 md:w-5 md:h-5 ${colors.icon}`} />
-                <span className="text-xs md:text-sm text-gray-600">
-                  {activeSubcategory.subcategories
-                    ? activeSubcategory.subcategories.reduce(
-                        (total, subcat) =>
-                          total + (subcat.tableData?.rows.length || 0),
-                        0,
-                      )
-                    : 0}{" "}
-                  items
-                </span>
               </div>
             </div>
           </div>
@@ -3699,17 +3658,6 @@ const IVDReagentsTable = () => {
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <Grid className={`w-4 h-4 md:w-5 md:h-5 ${colors.icon}`} />
-                <span className="text-xs md:text-sm text-gray-600">
-                  {activeSubcategory.subcategories
-                    ? activeSubcategory.subcategories.reduce(
-                        (total, subcat) =>
-                          total + (subcat.tableData?.rows.length || 0),
-                        0,
-                      )
-                    : 0}{" "}
-                  items
-                </span>
               </div>
             </div>
           </div>
@@ -3971,7 +3919,11 @@ const IVDReagentsTable = () => {
     return (
       <div className="mt-2 space-y-2">
         {category.subcategories?.map((subcategory) => {
-          const isSubActive = activeSubcategory?.id === subcategory.id;
+          const hasActiveChild = subcategory.subcategories?.some(
+            (subSubcategory) => subSubcategory.id === activeSubcategory?.id,
+          );
+          const isSubActive =
+            activeSubcategory?.id === subcategory.id || hasActiveChild;
 
           return (
             <div key={subcategory.id}>
@@ -4071,7 +4023,7 @@ const IVDReagentsTable = () => {
                                 isSubSubActive ? "font-medium" : ""
                               } text-gray-900`}
                             >
-                              {subSubcategory.name.split(". ")[1] ||
+                                  {subSubcategory.name.split(". ")[1] ||
                                 subSubcategory.name}
                             </span>
                           </div>
@@ -4340,13 +4292,11 @@ const IVDReagentsTable = () => {
                                 setActiveCategory(category);
                                 setActiveSubcategory(null);
                                 setActiveHematologyInstrument(null);
-                                setExpandedCategories((prev) => {
-                                  // Keep only this category expanded
-                                  if (prev.includes(category.id)) {
-                                    return prev;
-                                  }
-                                  return [category.id];
-                                });
+                                setExpandedCategories((prev) =>
+                                  prev.includes(category.id)
+                                    ? prev
+                                    : [...prev, category.id],
+                                );
                               }
 
                               // Special handling for specific categories
@@ -4391,60 +4341,71 @@ const IVDReagentsTable = () => {
                                 </h4>
                                 <div className="space-y-2">
                                   {category.subcategories?.map(
-                                    (subcategory) => (
-                                      <button
-                                        key={subcategory.id}
-                                        onClick={() =>
-                                          preserveScroll(mobileMenuRef, () =>
-                                            category.id ===
-                                            "clinical-chemistry-instrumentation"
-                                              ? handleInstrumentClick(
-                                                  category,
-                                                  subcategory,
-                                                )
-                                              : handleSubcategoryClick(
-                                                  category,
-                                                  subcategory,
-                                                ),
-                                          )
-                                        }
-                                        className={`w-full text-left p-3 rounded-xl transition-colors ${
-                                          activeSubcategory?.id ===
-                                          subcategory.id
-                                            ? `bg-gradient-to-r ${colors.light} border-l-4 ${colors.border}`
-                                            : "hover:bg-gray-50"
-                                        }`}
-                                      >
-                                        <div className="flex items-center gap-3">
-                                          <div
-                                            className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                                              subcategory.bgColor ||
-                                              "bg-gray-100"
-                                            } shadow-sm`}
-                                          >
-                                            {subcategory.icon ? (
-                                              <subcategory.icon className="w-5 h-5 text-gray-700" />
-                                            ) : category.id ===
-                                              "clinical-chemistry-instrumentation" ? (
-                                              <Cpu className="w-5 h-5 text-gray-700" />
-                                            ) : (
-                                              <Table className="w-5 h-5 text-gray-700" />
-                                            )}
+                                    (subcategory) => {
+                                      const hasActiveChild =
+                                        subcategory.subcategories?.some(
+                                          (subSubcategory) =>
+                                            subSubcategory.id ===
+                                            activeSubcategory?.id,
+                                        );
+                                      const isSubActive =
+                                        activeSubcategory?.id ===
+                                          subcategory.id || hasActiveChild;
+
+                                      return (
+                                        <button
+                                          key={subcategory.id}
+                                          onClick={() =>
+                                            preserveScroll(mobileMenuRef, () =>
+                                              category.id ===
+                                              "clinical-chemistry-instrumentation"
+                                                ? handleInstrumentClick(
+                                                    category,
+                                                    subcategory,
+                                                  )
+                                                : handleSubcategoryClick(
+                                                    category,
+                                                    subcategory,
+                                                  ),
+                                            )
+                                          }
+                                          className={`w-full text-left p-3 rounded-xl transition-colors ${
+                                            isSubActive
+                                              ? `bg-gradient-to-r ${colors.light} border-l-4 ${colors.border}`
+                                              : "hover:bg-gray-50"
+                                          }`}
+                                        >
+                                          <div className="flex items-center gap-3">
+                                            <div
+                                              className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                                                subcategory.bgColor ||
+                                                "bg-gray-100"
+                                              } shadow-sm`}
+                                            >
+                                              {subcategory.icon ? (
+                                                <subcategory.icon className="w-5 h-5 text-gray-700" />
+                                              ) : category.id ===
+                                                "clinical-chemistry-instrumentation" ? (
+                                                <Cpu className="w-5 h-5 text-gray-700" />
+                                              ) : (
+                                                <Table className="w-5 h-5 text-gray-700" />
+                                              )}
+                                            </div>
+                                            <div className="text-left flex-1">
+                                              <h5 className="font-medium text-gray-900 text-sm">
+                                                {subcategory.name.split(
+                                                  ". ",
+                                                )[1] || subcategory.name}
+                                              </h5>
+                                              <p className="text-xs text-gray-500">
+                                                {subcategory.description}
+                                              </p>
+                                            </div>
+                                            <ChevronRight className="w-4 h-4 text-gray-400" />
                                           </div>
-                                          <div className="text-left flex-1">
-                                            <h5 className="font-medium text-gray-900 text-sm">
-                                              {subcategory.name.split(
-                                                ". ",
-                                              )[1] || subcategory.name}
-                                            </h5>
-                                            <p className="text-xs text-gray-500">
-                                              {subcategory.description}
-                                            </p>
-                                          </div>
-                                          <ChevronRight className="w-4 h-4 text-gray-400" />
-                                        </div>
-                                      </button>
-                                    ),
+                                        </button>
+                                      );
+                                    },
                                   )}
                                 </div>
                               </div>
@@ -4587,13 +4548,11 @@ const IVDReagentsTable = () => {
                               setActiveCategory(category);
                               setActiveSubcategory(null);
                               setActiveHematologyInstrument(null);
-                              setExpandedCategories((prev) => {
-                                // Keep only this category expanded
-                                if (prev.includes(category.id)) {
-                                  return prev;
-                                }
-                                return [category.id];
-                              });
+                              setExpandedCategories((prev) =>
+                                prev.includes(category.id)
+                                  ? prev
+                                  : [...prev, category.id],
+                              );
                             }
 
                             // Special handling for specific categories

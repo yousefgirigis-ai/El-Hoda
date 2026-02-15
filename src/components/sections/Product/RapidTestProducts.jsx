@@ -63,6 +63,14 @@ const RapidTestProductsTable = () => {
     });
   };
 
+  const preservePageScroll = (updateFn) => {
+    const pageTop = window.scrollY;
+    updateFn();
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: pageTop, behavior: "auto" });
+    });
+  };
+
   const toggleCategory = (categoryId) => {
     setExpandedCategories((prev) =>
       prev.includes(categoryId)
@@ -72,12 +80,14 @@ const RapidTestProductsTable = () => {
   };
 
   const handleCategoryClick = (category) => {
-    if (activeCategory?.id === category.id) {
-      toggleCategory(category.id);
-    } else {
-      setActiveCategory(category);
-      setExpandedCategories([category.id]);
-    }
+    preservePageScroll(() => {
+      if (activeCategory?.id === category.id) {
+        toggleCategory(category.id);
+      } else {
+        setActiveCategory(category);
+        setExpandedCategories([category.id]);
+      }
+    });
   };
 
   const handleViewTable = () => {

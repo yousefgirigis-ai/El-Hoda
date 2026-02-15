@@ -7,7 +7,6 @@ import AboutSection from "../components/AboutSection";
 import ProductCategories from "../components/ProductCategories";
 import ControlsCalibrators from "../components/ControlsCalibrators";
 import UniversalReagents from "../components/tableRenderers/UniversalReagents";
-// import HeroBanner from "../components/HeroBanner";
 
 const PartnerDetails = () => {
   const { slug } = useParams();
@@ -36,8 +35,6 @@ const PartnerDetails = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br  pt-0 pb-28">
-      {/* <HeroBanner partner={partner} /> */}
-
       <div className="max-w-6xl mx-auto px-6 mt-8">
         <BackButton />
       </div>

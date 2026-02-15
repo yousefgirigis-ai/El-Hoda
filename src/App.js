@@ -39,10 +39,7 @@ import ValueProposition from "./components/sections/ValueProposition";
 /* ================= CORE VALUES COMPONENTS ================= */
 import CoreValues1 from "./components/sections/CoreValuesOverview";
 
-/* ================= SERVICE COMPONENTS ================= */
-import QualityManagementCompliance from "./pages/services/QualityManagementCompliance";
-import TechnicalEngineeringServices from "./pages/services/TechnicalEngineeringServices";
-import ApplicationSupportTraining from "./pages/services/ApplicationSupportTraining";
+
 
 /* ================= PAGES ================= */
 import PartnerDetails from "./pages/PartnerDetails";
@@ -66,6 +63,11 @@ import ProductsSection from "./components/sections/Product/ProductsSection";
 import EventDetails from "./components/sections/Event/EventDetails";
 import AnnualEvents from "./components/sections/Event/AnnualEvents";
 import OneTimeEvents from "./components/sections/Event/OneTimeEvents";
+
+/* ================= SERVICE COMPONENTS ================= */
+import QualityManagementCompliance from "./components/sections/services/QualityManagementCompliance";
+import TechnicalEngineeringServices from "./components/sections/services/TechnicalEngineeringServices";
+import ApplicationSupportTraining from "./components/sections/services/ApplicationSupportTraining";
 
 /* =========================================================
    SCROLL TO TOP COMPONENT

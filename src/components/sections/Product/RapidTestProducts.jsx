@@ -280,35 +280,6 @@ const RapidTestProductsTable = () => {
               <ChevronLeft className="w-4 h-4" />
               Back to Categories
             </button>
-
-            {/* View Mode Toggle for Mobile */}
-            <div className="flex items-center justify-between bg-white border border-gray-200 rounded-lg p-2">
-              <span className="text-sm font-medium text-gray-700">
-                View Mode:
-              </span>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setViewMode("cards")}
-                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                    viewMode === "cards"
-                      ? "bg-red-600 text-white" // Changed from blue to red
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                  }`}
-                >
-                  Cards
-                </button>
-                <button
-                  onClick={() => setViewMode("table")}
-                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                    viewMode === "table"
-                      ? "bg-red-600 text-white" // Changed from blue to red
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                  }`}
-                >
-                  Table
-                </button>
-              </div>
-            </div>
           </div>
         )}
 

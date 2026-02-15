@@ -18,7 +18,6 @@ const AboutSection = () => {
     triggerOnce: true,
   });
 
-  // Initialize to true for SSR/initial render to prevent flash
   const [hasAnimated, setHasAnimated] = React.useState(true);
   const [, setCurrent] = useState(0);
   const [, setSelectedPartner] = useState(null);
@@ -26,31 +25,17 @@ const AboutSection = () => {
   const [hoveredItem, setHoveredItem] = useState(null);
   const [activeItem, setActiveItem] = useState(null);
   const [isMounted, setIsMounted] = useState(false);
-
-  // FIX: Replace loadedImages state with a ref to prevent re-renders
   const loadedImagesRef = useRef(new Set());
   const imageElementsRef = useRef([]);
 
-  // Set mounted state to prevent SSR mismatches
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  // FIX: Memoized image load handler
-  const handleImageLoad = useCallback((index) => {
-    // Use ref instead of state to prevent re-renders
-    loadedImagesRef.current.add(index);
-
-    // Optional: If you need to track loaded count for UI, use a separate state
-    // that doesn't cause all images to re-render
-  }, []);
-
-  // FIX: Enhanced animation trigger with fallback
   useEffect(() => {
     if (inView) {
       setHasAnimated(true);
     } else {
-      // Fallback: if not in view after 1 second, still animate (for medium screens)
       const timeout = setTimeout(() => {
         setHasAnimated(true);
       }, 1000);
@@ -58,7 +43,6 @@ const AboutSection = () => {
     }
   }, [inView]);
 
-  // Enhanced animations with smoother transitions
   const titleAnimation = hasAnimated
     ? "opacity-100 translate-y-0"
     : "opacity-0 -translate-y-8";
@@ -75,7 +59,7 @@ const AboutSection = () => {
     ? "opacity-100 translate-y-0"
     : "opacity-0 translate-y-8";
 
-  // Product line data with icons
+
   const productLines = [
     {
       id: 1,
@@ -124,17 +108,16 @@ const AboutSection = () => {
     },
   ];
 
-  // Responsive items per slide - FIX: Safe access to window
+
   const getItemsPerSlide = useCallback(() => {
-    if (typeof window === "undefined") return 3; // SSR fallback
+    if (typeof window === "undefined") return 3; 
     if (window.innerWidth < 640) return 1;
     if (window.innerWidth < 1024) return 2;
     return 3;
   }, []);
 
-  const [itemsPerSlide, setItemsPerSlide] = useState(3); // Default for SSR
+  const [itemsPerSlide, setItemsPerSlide] = useState(3); 
 
-  // Handle window resize - FIX: Safe with isMounted check
   useEffect(() => {
     if (!isMounted) return;
 
@@ -142,14 +125,13 @@ const AboutSection = () => {
       setItemsPerSlide(getItemsPerSlide());
     };
 
-    // Set initial value
+    
     handleResize();
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [isMounted, getItemsPerSlide]);
 
-  // Create slides based on responsive items per slide
   const slides = [];
   for (let i = 0; i < slider.length; i += itemsPerSlide) {
     slides.push(slider.slice(i, i + itemsPerSlide));
@@ -159,14 +141,14 @@ const AboutSection = () => {
     setCurrent((prev) => (prev + 1) % slides.length);
   };
 
-  // Close modal
+
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedPartner(null);
     document.body.style.overflow = "auto";
   };
 
-  // Auto-rotate slider
+ 
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
@@ -174,7 +156,6 @@ const AboutSection = () => {
     return () => clearInterval(interval);
   }, [slides.length]);
 
-  // Close modal on escape key
   useEffect(() => {
     const handleEscapeKey = (e) => {
       if (e.key === "Escape" && isModalOpen) {
@@ -186,7 +167,6 @@ const AboutSection = () => {
     return () => document.removeEventListener("keydown", handleEscapeKey);
   }, [isModalOpen]);
 
-  // Handle item interaction
   const handleItemInteraction = (itemId) => {
     if (typeof window === "undefined") return;
 
@@ -195,7 +175,6 @@ const AboutSection = () => {
     }
   };
 
-  // Reset active item on click outside (for mobile)
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -213,19 +192,12 @@ const AboutSection = () => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, [activeItem]);
 
-  // FIX: Determine if we're on mobile or desktop for conditional rendering
   const isMobile =
     isMounted && typeof window !== "undefined" && window.innerWidth < 768;
-
-  // FIX: Separate state for loaded count (optional, if you want to show progress)
   const [loadedCount, setLoadedCount] = useState(0);
-
-  // FIX: Update loaded count without causing image re-renders
   const updateLoadedCount = useCallback(() => {
     setLoadedCount(loadedImagesRef.current.size);
   }, []);
-
-  // FIX: Initialize image elements ref
   useEffect(() => {
     imageElementsRef.current = imageElementsRef.current.slice(0, 12);
   }, []);
@@ -258,10 +230,7 @@ const AboutSection = () => {
             </span>
           </h2>
         </div>
-
-        {/* CONTENT - MOBILE: IMAGE FIRST, THEN TEXT */}
         <div className="flex flex-col lg:flex-row gap-10 sm:gap-16 md:gap-24 items-stretch">
-          {/* IMAGE CONTAINER */}
           <div
             className={`lg:w-1/2 w-full transition-all duration-1000 ease-out ${imageAnimation} order-1 lg:order-1`}
           >
@@ -271,23 +240,19 @@ const AboutSection = () => {
                 alt="EL HODA"
                 className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 loading="lazy"
-                key="main-image" // Add key to prevent re-renders
+                key="main-image" 
               />
               <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 <div className="absolute -left-1/2 top-0 h-full w-1/2 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 translate-x-[-120%] group-hover:translate-x-[220%] transition-transform duration-700"></div>
               </div>
-              {/* Optional overlay for better text contrast */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent lg:hidden"></div>
             </div>
           </div>
-
-          {/* TEXT CONTENT */}
           <div
             className={`lg:w-1/2 w-full transition-all duration-1000 delay-300 ease-out ${textAnimation} order-2 lg:order-2`}
           >
             <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl hover:shadow-2xl p-6 sm:p-8 md:p-10 h-full flex flex-col justify-between border border-gray-200 group transition-all duration-500">
               <div className="relative">
-                {/* Decorative corner */}
                 <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-6 h-6 sm:w-8 sm:h-8 border-t-2 border-l-2 border-[#E81729] rounded-tl-lg"></div>
                 <div className="absolute -bottom-3 -right-3 sm:-bottom-4 sm:-right-4 w-6 h-6 sm:w-8 sm:h-8 border-b-2 border-r-2 border-[#0A2647] rounded-br-lg"></div>
 
@@ -314,11 +279,8 @@ const AboutSection = () => {
                     state-of-the-art factory focuses on essential core product
                     lines critical to clinical and hospital settings:
                   </p>
-
-                  {/* Enhanced Product Lines Grid */}
                   <div className="mt-6 space-y-3">
                     {productLines.map((item) => {
-                      // Determine if item is active (for mobile) or hovered (for desktop)
                       const isActiveOnMobile = activeItem === item.id;
                       const isHoveredOnDesktop = hoveredItem === item.id;
                       const isActive = isMobile
@@ -425,7 +387,6 @@ const AboutSection = () => {
                                   )}
                                 </div>
                               </div>
-
                               {/* Animated Progress Bar */}
                               <div className="mt-3">
                                 <div className="h-1 w-full bg-gray-100 rounded-full overflow-hidden">
@@ -442,8 +403,6 @@ const AboutSection = () => {
                       );
                     })}
                   </div>
-
-                  {/* Mobile Instructions */}
                   {isMobile && (
                     <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-100">
                       <p className="text-xs text-blue-800 flex items-center gap-2">
@@ -477,7 +436,6 @@ const AboutSection = () => {
             </div>
           </div>
         </div>
-
         {/* ================= QUALITY & STRATEGY ================= */}
         <div className="mt-20 sm:mt-24 md:mt-32 mb-16 sm:mb-20 md:mb-24">
           <div
@@ -500,8 +458,6 @@ const AboutSection = () => {
                 Manufacturing Practice (GMP) principles.
               </p>
             </div>
-
-            {/* Factory Images - FIXED: No re-rendering on load */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {Array.from({ length: 12 }, (_, i) => {
                 const index = i + 1;
@@ -511,17 +467,14 @@ const AboutSection = () => {
                     key={index}
                     className="relative group overflow-hidden rounded-2xl shadow-lg border border-gray-200 bg-gray-100 min-h-[200px] sm:min-h-[256px] transition-transform duration-300 hover:-translate-y-1"
                   >
-                    {/* FIX: Image without conditional rendering based on state */}
                     <img
                       src={`/factory${index}.jpg`}
                       alt={`Factory ${index}`}
                       className="w-full h-56 sm:h-64 object-cover transition-transform duration-300 group-hover:scale-105 opacity-100"
                       loading="lazy"
                       decoding="async"
-                      // FIX: Use ref callback instead of onLoad that updates state
                       ref={(el) => {
                         if (el && !loadedImagesRef.current.has(index)) {
-                          // Check if image is already loaded
                           if (el.complete) {
                             loadedImagesRef.current.add(index);
                             updateLoadedCount();
@@ -534,18 +487,13 @@ const AboutSection = () => {
                         }
                       }}
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      // FIX: Add importance attribute for priority
                       importance={index <= 3 ? "high" : "low"}
                     />
-
-                    {/* Hover overlay - simplified */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
                 );
               })}
             </div>
-
-            {/* FIX: Optional loading progress indicator - less intrusive */}
             {loadedCount < 12 && (
               <div className="mt-6 text-center">
                 <p className="text-sm text-gray-600">

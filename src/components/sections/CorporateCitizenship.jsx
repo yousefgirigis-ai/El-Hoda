@@ -132,20 +132,20 @@ const CorporateCitizenship = () => {
   return (
     <section
       ref={containerRef}
-      className="pt-32  bg-white overflow-hidden"
+      className="pt-20 md:pt-32 bg-white overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
         {/* ANIMATED HEADER */}
         <motion.div
           ref={headerRef}
-          className="relative mb-16"
+          className="relative mb-10 md:mb-16"
           initial="hidden"
           animate={isHeaderInView ? "visible" : "hidden"}
           variants={staggerContainer}
           viewport={{ once: true }}
         >
           <motion.div
-            className="absolute -left-6 top-1/2 transform -translate-y-1/2 w-12 h-12"
+            className="absolute -left-2 md:-left-6 top-1/2 transform -translate-y-1/2 w-9 h-9 md:w-12 md:h-12"
             variants={scaleIn}
           >
             <motion.div
@@ -154,7 +154,7 @@ const CorporateCitizenship = () => {
               transition={{ duration: 2, repeat: Infinity }}
             >
               <svg
-                className="w-6 h-6 text-white"
+                className="w-4 h-4 md:w-6 md:h-6 text-white"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -164,7 +164,7 @@ const CorporateCitizenship = () => {
           </motion.div>
 
           <motion.h2
-            className="text-4xl md:text-5xl font-extrabold mb-4 ml-16"
+            className="text-2xl sm:text-3xl md:text-5xl font-extrabold mb-3 md:mb-4 ml-10 md:ml-16 leading-tight"
             variants={staggerContainer}
           >
             <motion.span className="text-gray-900" variants={fadeInUp}>
@@ -180,7 +180,7 @@ const CorporateCitizenship = () => {
           </motion.h2>
 
           <motion.div
-            className="h-1 w-32 bg-gradient-to-r from-[#E81729] to-red-500 ml-16 rounded-full"
+            className="h-1 w-24 md:w-32 bg-gradient-to-r from-[#E81729] to-red-500 ml-10 md:ml-16 rounded-full"
             variants={growWidth}
             initial="hidden"
             animate={isHeaderInView ? "visible" : "hidden"}
@@ -190,7 +190,7 @@ const CorporateCitizenship = () => {
         {/* AWARDS & RECOGNITION SECTION */}
         <motion.div
           ref={awardsSectionRef}
-          className="mb-20"
+          className="mb-12 md:mb-20"
           initial="hidden"
           animate={isAwardsSectionInView ? "visible" : "hidden"}
           variants={fadeInUp}
@@ -198,15 +198,15 @@ const CorporateCitizenship = () => {
           transition={{ delay: 0.2 }}
         >
           <motion.div
-            className="flex items-center gap-4 mb-8"
+            className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8"
             variants={cardItem}
           >
             <motion.div
-              className="p-3 bg-gradient-to-br from-yellow-100 to-yellow-50 rounded-xl shadow-lg"
+              className="p-2.5 md:p-3 bg-gradient-to-br from-yellow-100 to-yellow-50 rounded-xl shadow-lg"
               variants={scaleIn}
             >
               <svg
-                className="w-8 h-8 text-yellow-600"
+                className="w-6 h-6 md:w-8 md:h-8 text-yellow-600"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -214,7 +214,7 @@ const CorporateCitizenship = () => {
               </svg>
             </motion.div>
             <motion.h3
-              className="text-3xl font-bold text-gray-900"
+              className="text-2xl md:text-3xl font-bold text-gray-900"
               variants={fadeInLeft}
             >
               Awards & Recognition
@@ -224,7 +224,7 @@ const CorporateCitizenship = () => {
           {/* STRATEGIC ENGAGEMENT CARD */}
           <motion.div
             ref={strategicCardRef}
-            className="mb-16 bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 border border-gray-100 group"
+            className="mb-10 md:mb-16 bg-gradient-to-br from-white to-gray-50 rounded-2xl p-5 sm:p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-500 md:hover:-translate-y-1 border border-gray-100 group"
             variants={fadeInUp}
             initial="hidden"
             animate={isStrategicCardInView ? "visible" : "hidden"}
@@ -241,13 +241,13 @@ const CorporateCitizenship = () => {
             />
 
             <motion.div
-              className="flex flex-col md:flex-row md:items-start gap-6"
+              className="flex flex-col md:flex-row md:items-start gap-4 md:gap-6"
               variants={staggerContainer}
             >
               <motion.div className="flex-shrink-0" variants={scaleIn}>
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
                   <svg
-                    className="w-8 h-8 text-white"
+                    className="w-6 h-6 md:w-8 md:h-8 text-white"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -258,13 +258,13 @@ const CorporateCitizenship = () => {
 
               <motion.div className="flex-grow" variants={staggerContainer}>
                 <motion.h3
-                  className="text-2xl font-bold text-gray-900 mb-2"
+                  className="text-xl md:text-2xl font-bold text-gray-900 mb-2"
                   variants={cardItem}
                 >
                   Elhoda International: Strategic Engagement and Corporate
                   Citizenship
                   <motion.span
-                    className="block text-lg font-medium text-gray-600 mt-2"
+                    className="block text-base md:text-lg font-medium text-gray-600 mt-2"
                     variants={cardItem}
                   >
                     Industry Engagement & Events
@@ -272,7 +272,7 @@ const CorporateCitizenship = () => {
                 </motion.h3>
 
                 <motion.p
-                  className="text-gray-700 mb-6 leading-relaxed"
+                  className="text-sm md:text-base text-gray-700 mb-5 md:mb-6 leading-relaxed"
                   variants={cardItem}
                 >
                   Elhoda International is a dedicated leader in the healthcare
@@ -285,15 +285,15 @@ const CorporateCitizenship = () => {
 
                 {/* GLOBAL SCOPE SECTION */}
                 <motion.div
-                  className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 mb-8 border-l-4 border-blue-500"
+                  className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 md:p-6 mb-6 md:mb-8 border-l-4 border-blue-500"
                   variants={cardItem}
                 >
                   <motion.h4
-                    className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-3"
+                    className="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4 flex items-center gap-2 md:gap-3"
                     variants={cardItem}
                   >
                     <motion.svg
-                      className="w-6 h-6 text-blue-600"
+                      className="w-5 h-5 md:w-6 md:h-6 text-blue-600"
                       fill="currentColor"
                       viewBox="0 0 24 24"
                       animate={{ rotate: 360 }}
@@ -309,7 +309,7 @@ const CorporateCitizenship = () => {
                   </motion.h4>
 
                   <motion.div
-                    className="grid md:grid-cols-2 gap-6"
+                    className="grid md:grid-cols-2 gap-4 md:gap-6"
                     variants={staggerContainer}
                   >
                     <motion.div variants={cardItem}>
@@ -328,10 +328,10 @@ const CorporateCitizenship = () => {
                     </motion.div>
 
                     <motion.div
-                      className="bg-white rounded-lg p-4 shadow-inner"
+                      className="bg-white rounded-lg p-3 md:p-4 shadow-inner"
                       variants={scaleIn}
                     >
-                      <h5 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                      <h5 className="font-semibold text-gray-900 mb-3 flex items-center gap-2 text-sm md:text-base">
                         <svg
                           className="w-5 h-5 text-[#E81729]"
                           fill="currentColor"
@@ -341,7 +341,7 @@ const CorporateCitizenship = () => {
                         </svg>
                         Key Industry Platforms
                       </h5>
-                      <ul className="space-y-3">
+                      <ul className="space-y-2.5 md:space-y-3">
                         {[
                           {
                             title: "Africa Health ExCon",
@@ -360,7 +360,7 @@ const CorporateCitizenship = () => {
                         ].map((platform, i) => (
                           <motion.li
                             key={i}
-                            className="flex items-center gap-3 group hover:translate-x-2 transition-transform"
+                            className="flex items-center gap-2.5 md:gap-3 group md:hover:translate-x-2 transition-transform text-sm md:text-base"
                             variants={cardItem}
                           >
                             <div className="w-2 h-2 bg-[#E81729] rounded-full"></div>
@@ -379,16 +379,16 @@ const CorporateCitizenship = () => {
 
                 {/* GOVERNMENT COLLABORATION */}
                 <motion.div
-                  className="bg-gradient-to-r from-gray-50 to-white rounded-xl p-6 border border-gray-200"
+                  className="bg-gradient-to-r from-gray-50 to-white rounded-xl p-4 md:p-6 border border-gray-200"
                   variants={cardItem}
                 >
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-3 md:gap-4">
                     <motion.div
-                      className="flex-shrink-0 p-3 bg-gradient-to-br from-green-100 to-emerald-50 rounded-lg"
+                      className="flex-shrink-0 p-2.5 md:p-3 bg-gradient-to-br from-green-100 to-emerald-50 rounded-lg"
                       variants={scaleIn}
                     >
                       <svg
-                        className="w-6 h-6 text-green-700"
+                        className="w-5 h-5 md:w-6 md:h-6 text-green-700"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
@@ -396,7 +396,7 @@ const CorporateCitizenship = () => {
                       </svg>
                     </motion.div>
                     <motion.p
-                      className="text-gray-700 italic"
+                      className="text-sm md:text-base text-gray-700 italic"
                       variants={fadeInRight}
                     >
                       We actively collaborate with governmental bodies on
@@ -415,7 +415,7 @@ const CorporateCitizenship = () => {
           {/* CSR SECTION */}
           <motion.div
             ref={csrSectionRef}
-            className="bg-gradient-to-br from-white to-rose-50 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 border border-rose-100 group"
+            className="bg-gradient-to-br from-white to-rose-50 rounded-2xl p-5 sm:p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-500 md:hover:-translate-y-1 border border-rose-100 group"
             variants={fadeInUp}
             initial="hidden"
             animate={isCsrSectionInView ? "visible" : "hidden"}
@@ -431,15 +431,15 @@ const CorporateCitizenship = () => {
             />
 
             <motion.div
-              className="flex items-center gap-4 mb-8"
+              className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8"
               variants={cardItem}
             >
               <motion.div
-                className="p-3 bg-gradient-to-br from-rose-100 to-pink-50 rounded-xl shadow-lg"
+                className="p-2.5 md:p-3 bg-gradient-to-br from-rose-100 to-pink-50 rounded-xl shadow-lg"
                 variants={scaleIn}
               >
                 <svg
-                  className="w-8 h-8 text-rose-600"
+                  className="w-6 h-6 md:w-8 md:h-8 text-rose-600"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -447,7 +447,7 @@ const CorporateCitizenship = () => {
                 </svg>
               </motion.div>
               <motion.h3
-                className="text-3xl font-bold text-gray-900"
+                className="text-2xl md:text-3xl font-bold text-gray-900"
                 variants={fadeInLeft}
               >
                 Corporate Social Responsibility (CSR)
@@ -455,7 +455,7 @@ const CorporateCitizenship = () => {
             </motion.div>
 
             <motion.p
-              className="text-gray-700 mb-10 leading-relaxed"
+              className="text-sm md:text-base text-gray-700 mb-7 md:mb-10 leading-relaxed"
               variants={cardItem}
             >
               Elhoda International is actively engaged in initiatives that
@@ -464,16 +464,16 @@ const CorporateCitizenship = () => {
               core business.
             </motion.p>
 
-            <motion.div className="space-y-8" variants={staggerContainer}>
+            <motion.div className="space-y-5 md:space-y-8" variants={staggerContainer}>
               {/* SPORTS PROMOTION CARD */}
               <motion.div
                 ref={sportsCardRef}
-                className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-white to-red-50 p-6 shadow-lg border border-red-100 hover:shadow-xl transition-all duration-500"
+                className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-white to-red-50 p-4 md:p-6 shadow-lg border border-red-100 hover:shadow-xl transition-all duration-500"
                 variants={fadeInUp}
                 initial="hidden"
                 animate={isSportsCardInView ? "visible" : "hidden"}
                 viewport={{ once: true }}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.01 }}
               >
                 {/* Background decoration */}
                 <div className="absolute top-0 right-0 w-24 h-24 opacity-10">
@@ -487,17 +487,17 @@ const CorporateCitizenship = () => {
                 </div>
 
                 <motion.div
-                  className="flex flex-col md:flex-row md:items-start gap-6"
+                  className="flex flex-col md:flex-row md:items-start gap-4 md:gap-6"
                   variants={staggerContainer}
                 >
                   <motion.div className="flex-shrink-0" variants={scaleIn}>
                     <motion.div
-                      className="w-20 h-20 bg-gradient-to-br from-red-500 to-[#E81729] rounded-full flex items-center justify-center shadow-lg"
+                      className="w-14 h-14 md:w-20 md:h-20 bg-gradient-to-br from-red-500 to-[#E81729] rounded-full flex items-center justify-center shadow-lg"
                       whileHover={{ scale: 1.1 }}
                       transition={{ duration: 0.3 }}
                     >
                       <svg
-                        className="w-10 h-12 text-white"
+                        className="w-7 h-8 md:w-10 md:h-12 text-white"
                         fill="currentColor"
                         viewBox="0 0 20 30"
                       >
@@ -508,12 +508,12 @@ const CorporateCitizenship = () => {
 
                   <motion.div className="flex-grow" variants={staggerContainer}>
                     <motion.h4
-                      className="text-xl font-bold text-gray-900 mb-3 flex items-center gap-3"
+                      className="text-lg md:text-xl font-bold text-gray-900 mb-3 flex items-center gap-2 md:gap-3"
                       variants={cardItem}
                     >
-                      <span className="p-2 bg-red-100 rounded-lg">
+                      <span className="p-1.5 md:p-2 bg-red-100 rounded-lg">
                         <svg
-                          className="w-5 h-5 text-red-600"
+                          className="w-4 h-4 md:w-5 md:h-5 text-red-600"
                           fill="currentColor"
                           viewBox="0 0 24 24"
                         >
@@ -522,10 +522,10 @@ const CorporateCitizenship = () => {
                       </span>
                       Promoting Health Through Sport
                     </motion.h4>
-                    <motion.p className="text-gray-700" variants={cardItem}>
+                    <motion.p className="text-sm md:text-base text-gray-700" variants={cardItem}>
                       Elhoda champions physical fitness and teamwork. We were
                       proud champions of the high-profile{" "}
-                      <span className="font-bold text-red-700 bg-red-50 px-2 py-1 rounded">
+                      <span className="font-bold text-red-700 bg-red-50 px-2 py-0.5 md:py-1 rounded">
                         "100 Million Healthy Lives Football Championship,"
                       </span>{" "}
                       an event endorsed by senior governmental figures,
@@ -541,12 +541,12 @@ const CorporateCitizenship = () => {
               {/* PHILANTHROPIC SUPPORT CARD */}
               <motion.div
                 ref={philanthropicCardRef}
-                className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-white to-purple-50 p-6 shadow-lg border border-purple-100 hover:shadow-xl transition-all duration-500"
+                className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-white to-purple-50 p-4 md:p-6 shadow-lg border border-purple-100 hover:shadow-xl transition-all duration-500"
                 variants={fadeInUp}
                 initial="hidden"
                 animate={isPhilanthropicCardInView ? "visible" : "hidden"}
                 viewport={{ once: true }}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.01 }}
               >
                 {/* Background decoration */}
                 <div className="absolute top-0 right-0 w-24 h-24 opacity-10">
@@ -560,17 +560,17 @@ const CorporateCitizenship = () => {
                 </div>
 
                 <motion.div
-                  className="flex flex-col md:flex-row md:items-start gap-6"
+                  className="flex flex-col md:flex-row md:items-start gap-4 md:gap-6"
                   variants={staggerContainer}
                 >
                   <motion.div className="flex-shrink-0" variants={scaleIn}>
                     <motion.div
-                      className="w-20 h-20 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg"
+                      className="w-14 h-14 md:w-20 md:h-20 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg"
                       whileHover={{ scale: 1.1 }}
                       transition={{ duration: 0.3 }}
                     >
                       <svg
-                        className="w-10 h-10 text-white"
+                        className="w-7 h-7 md:w-10 md:h-10 text-white"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
@@ -581,12 +581,12 @@ const CorporateCitizenship = () => {
 
                   <motion.div className="flex-grow" variants={staggerContainer}>
                     <motion.h4
-                      className="text-xl font-bold text-gray-900 mb-3 flex items-center gap-3"
+                      className="text-lg md:text-xl font-bold text-gray-900 mb-3 flex items-center gap-2 md:gap-3"
                       variants={cardItem}
                     >
-                      <span className="p-2 bg-purple-100 rounded-lg">
+                      <span className="p-1.5 md:p-2 bg-purple-100 rounded-lg">
                         <svg
-                          className="w-5 h-5 text-purple-600"
+                          className="w-4 h-4 md:w-5 md:h-5 text-purple-600"
                           fill="currentColor"
                           viewBox="0 0 24 24"
                         >
@@ -595,10 +595,10 @@ const CorporateCitizenship = () => {
                       </span>
                       Community and Philanthropic Support
                     </motion.h4>
-                    <motion.p className="text-gray-700" variants={cardItem}>
+                    <motion.p className="text-sm md:text-base text-gray-700" variants={cardItem}>
                       Elhoda International provides consistent support to
                       critical social causes. We are a key contributor to the{" "}
-                      <span className="font-bold text-purple-700 bg-purple-50 px-2 py-1 rounded">
+                      <span className="font-bold text-purple-700 bg-purple-50 px-2 py-0.5 md:py-1 rounded">
                         Baheya Foundation,
                       </span>{" "}
                       assisting its mission through philanthropic support across
@@ -606,19 +606,19 @@ const CorporateCitizenship = () => {
                     </motion.p>
 
                     <motion.div
-                      className="mt-6 flex items-center gap-4 p-4 bg-white rounded-lg shadow-inner"
+                      className="mt-5 md:mt-6 flex items-start md:items-center gap-3 md:gap-4 p-3 md:p-4 bg-white rounded-lg shadow-inner"
                       variants={cardItem}
                     >
-                      <div className="p-2 bg-purple-100 rounded-lg">
+                      <div className="p-1.5 md:p-2 bg-purple-100 rounded-lg">
                         <svg
-                          className="w-6 h-6 text-purple-600"
+                          className="w-5 h-5 md:w-6 md:h-6 text-purple-600"
                           fill="currentColor"
                           viewBox="0 0 24 24"
                         >
                           <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1z" />
                         </svg>
                       </div>
-                      <p className="text-sm text-gray-600 italic">
+                      <p className="text-xs md:text-sm text-gray-600 italic">
                         Supporting breast cancer awareness, early detection, and
                         treatment initiatives across Egypt
                       </p>

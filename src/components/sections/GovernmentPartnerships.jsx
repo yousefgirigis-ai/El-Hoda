@@ -184,12 +184,12 @@ const GovernmentPartnerships = () => {
   return (
     <section
       ref={containerRef}
-      className="pt-10 pb-5 bg-white overflow-hidden"
+      className="pt-8 md:pt-10 pb-5 bg-white overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Background gradient */}
         <motion.div
-          className="absolute -top-32 -right-32 w-[800px] h-[800px] bg-gradient-to-bl from-[#E81729]/10 via-pink-100/5 to-transparent rounded-full blur-3xl opacity-40"
+          className="absolute -top-40 -right-40 w-[520px] h-[520px] md:-top-32 md:-right-32 md:w-[800px] md:h-[800px] bg-gradient-to-bl from-[#E81729]/10 via-pink-100/5 to-transparent rounded-full blur-3xl opacity-30 md:opacity-40"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 0.4, scale: 1 }}
           transition={{ duration: 2, ease: "easeOut" }}
@@ -198,7 +198,7 @@ const GovernmentPartnerships = () => {
         {/* MAIN CARD */}
         <motion.div
           ref={mainCardRef}
-          className="relative group mb-24"
+          className="relative group mb-14 md:mb-24"
           initial="hidden"
           animate={isMainCardInView ? "visible" : "hidden"}
           variants={fadeInUp}
@@ -211,12 +211,12 @@ const GovernmentPartnerships = () => {
             animate={{ opacity: isMainCardInView ? 0.5 : 0 }}
             transition={{ duration: 1 }}
           />
-          <div className="absolute -top-10 -left-10 w-64 h-64 bg-gradient-to-br from-red-400/20 to-transparent rounded-full blur-2xl animate-pulse-slow" />
-          <div className="absolute -bottom-10 -right-10 w-72 h-72 bg-gradient-to-tr from-blue-400/15 to-transparent rounded-full blur-2xl animate-pulse-slower" />
+          <div className="absolute -top-10 -left-10 w-40 h-40 md:w-64 md:h-64 bg-gradient-to-br from-red-400/20 to-transparent rounded-full blur-2xl animate-pulse-slow" />
+          <div className="absolute -bottom-10 -right-10 w-44 h-44 md:w-72 md:h-72 bg-gradient-to-tr from-blue-400/15 to-transparent rounded-full blur-2xl animate-pulse-slower" />
 
           {/* Main content container */}
           <motion.div
-            className="relative bg-gradient-to-br from-white via-white/95 to-gray-50/90 backdrop-blur-md border border-gray-200/60 rounded-3xl p-10 md:p-12 shadow-2xl shadow-red-500/5 overflow-hidden"
+            className="relative bg-gradient-to-br from-white via-white/95 to-gray-50/90 backdrop-blur-md border border-gray-200/60 rounded-2xl md:rounded-3xl p-5 sm:p-7 md:p-12 shadow-2xl shadow-red-500/5 overflow-hidden"
             variants={fadeInScale}
           >
             {/* Decorative corners */}
@@ -248,14 +248,14 @@ const GovernmentPartnerships = () => {
             />
 
             {/* Header section */}
-            <motion.div className="relative mb-16" variants={staggerContainer}>
-              <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-10">
+            <motion.div className="relative mb-10 md:mb-16" variants={staggerContainer}>
+              <div className="flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
                 {/* Icon */}
                 <motion.div
                   className="relative flex-shrink-0"
                   variants={iconVariants}
                 >
-                  <div className="relative w-20 h-20">
+                  <div className="relative w-16 h-16 md:w-20 md:h-20">
                     <motion.div
                       className="absolute inset-0 border-2 border-[#E81729]/20 rounded-full"
                       animate={{ rotate: 360 }}
@@ -268,9 +268,9 @@ const GovernmentPartnerships = () => {
                       <div className="absolute top-0 left-1/2 w-2 h-2 bg-[#E81729] rounded-full -translate-x-1/2 -translate-y-1" />
                     </motion.div>
 
-                    <div className="absolute inset-4 bg-gradient-to-br from-[#E81729] to-[#ff6b6b] rounded-full flex items-center justify-center shadow-lg shadow-red-500/30">
+                    <div className="absolute inset-3 md:inset-4 bg-gradient-to-br from-[#E81729] to-[#ff6b6b] rounded-full flex items-center justify-center shadow-lg shadow-red-500/30">
                       <svg
-                        className="w-8 h-8 text-white"
+                        className="w-6 h-6 md:w-8 md:h-8 text-white"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
@@ -285,18 +285,18 @@ const GovernmentPartnerships = () => {
                 {/* Title section */}
                 <motion.div className="flex-1" variants={staggerContainer}>
                   <motion.div
-                    className="inline-flex items-center gap-4 mb-6"
+                    className="inline-flex flex-wrap items-center gap-2 md:gap-4 mb-5 md:mb-6"
                     variants={cardItem}
                   >
-                    <div className="w-16 h-1 bg-gradient-to-r from-[#E81729] to-transparent rounded-full" />
-                    <span className="text-sm font-semibold uppercase tracking-wider text-[#E81729] bg-red-50 px-4 py-1.5 rounded-full border border-red-100">
+                    <div className="hidden sm:block w-16 h-1 bg-gradient-to-r from-[#E81729] to-transparent rounded-full" />
+                    <span className="text-[11px] sm:text-sm font-semibold uppercase tracking-wider text-[#E81729] bg-red-50 px-3 py-1.5 rounded-full border border-red-100">
                       Strategic Partnership
                     </span>
-                    <div className="w-16 h-1 bg-gradient-to-l from-[#E81729] to-transparent rounded-full" />
+                    <div className="hidden sm:block w-16 h-1 bg-gradient-to-l from-[#E81729] to-transparent rounded-full" />
                   </motion.div>
 
                   <motion.h3
-                    className="text-4xl md:text-5xl font-bold mb-6"
+                    className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 md:mb-6 leading-tight"
                     variants={staggerContainer}
                   >
                     <motion.span
@@ -329,7 +329,7 @@ const GovernmentPartnerships = () => {
                   </motion.h3>
 
                   <motion.p
-                    className="text-lg text-gray-600 max-w-3xl leading-relaxed"
+                    className="text-base md:text-lg text-gray-600 max-w-3xl leading-relaxed"
                     variants={cardItem}
                   >
                     Driving national healthcare transformation through strategic
@@ -341,7 +341,7 @@ const GovernmentPartnerships = () => {
 
             {/* Main points */}
             <motion.div
-              className="relative space-y-8 mb-16"
+              className="relative space-y-5 md:space-y-8 mb-10 md:mb-16"
               variants={staggerContainer}
             >
               <div className="absolute left-0 right-0 top-1/2 h-0.5 bg-gradient-to-r from-transparent via-gray-200/50 to-transparent -translate-y-1/2 hidden md:block" />
@@ -371,7 +371,7 @@ const GovernmentPartnerships = () => {
 
                   {/* Card */}
                   <div
-                    className={`relative bg-gradient-to-br ${item.gradient} backdrop-blur-sm border border-gray-200/60 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group-hover/card:border-${item.accentColor}-400/30 overflow-hidden`}
+                    className={`relative bg-gradient-to-br ${item.gradient} backdrop-blur-sm border border-gray-200/60 rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-500 md:hover:-translate-y-2 group-hover/card:border-${item.accentColor}-400/30 overflow-hidden`}
                   >
                     {/* Shimmer effect */}
                     <motion.div
@@ -391,7 +391,7 @@ const GovernmentPartnerships = () => {
                       />
                     </div>
 
-                    <div className="relative flex items-start gap-6">
+                    <div className="relative flex items-start gap-3 sm:gap-4 md:gap-6">
                       {/* Icon */}
                       <motion.div
                         className="flex-shrink-0"
@@ -406,10 +406,10 @@ const GovernmentPartnerships = () => {
                         }
                       >
                         <div
-                          className={`relative w-14 h-14 bg-gradient-to-br from-${item.accentColor}-100 to-white rounded-xl flex items-center justify-center shadow-lg group-hover/card:scale-110 transition-transform duration-500`}
+                          className={`relative w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-gradient-to-br from-${item.accentColor}-100 to-white rounded-xl flex items-center justify-center shadow-lg group-hover/card:scale-110 transition-transform duration-500`}
                         >
                           <item.icon
-                            className={`w-7 h-7 ${accentIconClass[item.accentColor] || "text-gray-700"} z-10 relative`}
+                            className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 ${accentIconClass[item.accentColor] || "text-gray-700"} z-10 relative`}
                           />
                           <div
                             className={`absolute inset-0 bg-gradient-to-br from-${item.accentColor}-400/20 to-transparent rounded-xl opacity-0 group-hover/card:opacity-100 transition-opacity duration-500`}
@@ -443,7 +443,7 @@ const GovernmentPartnerships = () => {
                         }
                       >
                         <p
-                          className={`text-xl leading-relaxed ${
+                          className={`text-base sm:text-lg md:text-xl leading-relaxed ${
                             item.highlight
                               ? "font-semibold text-gray-900"
                               : "text-gray-800"
@@ -461,7 +461,7 @@ const GovernmentPartnerships = () => {
             {/* Initiatives grid */}
             <motion.div
               ref={initiativesRef}
-              className="grid grid-cols-1 md:grid-cols-3 gap-8"
+              className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8"
               variants={staggerContainer}
               initial="hidden"
               animate={isInitiativesInView ? "visible" : "hidden"}
@@ -470,7 +470,7 @@ const GovernmentPartnerships = () => {
               {initiatives.map((item, i) => (
                 <motion.div
                   key={i}
-                  className={`group relative bg-gradient-to-br ${item.gradient} ${item.border} border-2 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-3`}
+                  className={`group relative bg-gradient-to-br ${item.gradient} ${item.border} border-2 rounded-2xl md:rounded-3xl p-5 sm:p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-500 md:hover:-translate-y-3`}
                   variants={cardItem}
                 >
                   {/* Shimmer effect */}
@@ -485,15 +485,15 @@ const GovernmentPartnerships = () => {
                   <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent opacity-0 group-hover:opacity-100 rounded-3xl transition-opacity duration-500" />
 
                   {/* Icon and line */}
-                  <div className="relative flex items-center gap-5 mb-6">
+                  <div className="relative flex items-center gap-3 md:gap-5 mb-4 md:mb-6">
                     <div className="transform group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">
-                      <item.icon className={`w-12 h-12 ${item.iconClass}`} />
+                      <item.icon className={`w-9 h-9 md:w-12 md:h-12 ${item.iconClass}`} />
                     </div>
                     <div className="flex-1 h-1.5 bg-gradient-to-r from-[#E81729]/30 via-[#E81729] to-transparent rounded-full group-hover:w-full transition-all duration-700" />
                   </div>
 
                   {/* Title */}
-                  <h4 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-[#E81729] transition-colors duration-500">
+                  <h4 className="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4 group-hover:text-[#E81729] transition-colors duration-500 leading-snug">
                     {item.title}
                   </h4>
 
@@ -526,7 +526,7 @@ const GovernmentPartnerships = () => {
 
           {/* Main container */}
           <motion.div
-            className="relative bg-gradient-to-r from-gray-900 via-black to-gray-900 rounded-3xl p-10 md:p-14 shadow-2xl overflow-hidden"
+            className="relative bg-gradient-to-r from-gray-900 via-black to-gray-900 rounded-2xl md:rounded-3xl p-5 sm:p-7 md:p-14 shadow-2xl overflow-hidden"
             variants={fadeInScale}
           >
             {/* Shimmer effect */}
@@ -540,7 +540,7 @@ const GovernmentPartnerships = () => {
 
             {/* Text content */}
             <motion.p
-              className="text-xl text-white/90 leading-relaxed text-center max-w-4xl mx-auto relative z-10"
+              className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed text-center max-w-4xl mx-auto relative z-10"
               variants={staggerContainer}
             >
               This continuous collaboration{" "}

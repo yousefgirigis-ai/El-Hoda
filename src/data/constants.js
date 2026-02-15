@@ -11767,6 +11767,7 @@ export const blogPosts = [
     ],
   },
 
+
   {
     slug: "egy-health-international-congress-2025",
     type: "annual",
@@ -11776,9 +11777,7 @@ export const blogPosts = [
     date: "2025 ",
 
     images: [
-      "/africa-health-excon.jpg",
-      "/africia-health-2022.JPG",
-      "/africia-health-2024.jpg",
+      "/IMG_7646.jpg",
     ],
 
     overview: {
@@ -11808,67 +11807,26 @@ export const blogPosts = [
     ],
   },
 
-  {
-    slug: "CSR cumminty impact",
-    type: "annual",
-    title: "Sustainability of Hope: A Legacy of Giving",
-    subtitle: "Consistency in Compassion",
-    category: "CSR & Community Impact",
-    date: "2025",
-
-    images: [
-      "/africa-health-excon.jpg",
-      "/africia-health-2022.JPG",
-      "/africia-health-2024.jpg",
-    ],
-
-    overview: {
-      eyebrow: "Event Overview",
-      heading: "Shaping a New Order for African Public Health",
-      intro:
-        "As we enter 2025, Elhoda International’s CSR mission has evolved into a sustainable ecosystem of support. Our 2025 events with Baheya represent a 'Legacy of Giving,' ensuring that the annual milestones of Mother’s Day and Ramadan are permanent fixtures of hope.",
-    },
-
-    highlights: [
-      {
-        title: "Mother’s Day Gala",
-        text: "A day of empowerment featuring vocational success stories from Baheya’s fighters, supported by Elhoda’s commitment to women’s health and social reintegration.",
-      },
-      {
-        title: "The Ramadan Gathering",
-        text: "Our signature Iftar event continues to grow, serving as a platform for survivors to share their stories of triumph with those currently in treatment.",
-      },
-      {
-        title: "The Umrah Gift",
-        text: "For the third consecutive year, the Umrah withdrawal remains the cornerstone of our spiritual support program. Elhoda views these trips not as a gift, but as a tribute to the unwavering faith of the Baheya fighters.",
-      },
-      {
-        title: "National Vision",
-        text: "This ongoing partnership aligns with Elhoda’s broader mission to support Egypt’s health sector through both medical technology and humanitarian advocacy.",
-      },
-    ],
-  },
 
   {
-    slug: "Arab health",
+    slug: "Arab health-1",
     type: "annual",
     title: "Arab health | Dubai",
-    subtitle:
-      "Strengthening the Future of Healthcare through Global Collaboration",
+    subtitle: "Strengthening the Future of Healthcare through Global Collaboration",
     category: "Global Strategic Alliances at Arab Health",
     date: "2025",
-
     images: [
-      "/africa-health-excon.jpg",
-      "/africia-health-2022.JPG",
-      "/africia-health-2024.jpg",
+      "/IMG-20250908-WA0016.jpg",
+      "/IMG-20250908-WA0020.jpg",
+      "/IMG-20250908-WA0021.jpg",
+      "/IMG-20250908-WA0025.jpg",
+      "/IMG-20250908-WA0031.jpg",
     ],
 
     overview: {
       eyebrow: "Event Overview",
       heading: "Shaping a New Order for African Public Health",
-      intro:
-        "On the sidelines of Arab Health 2025—the Middle East’s premier healthcare exhibition—Elhoda International joined a distinguished assembly of global healthcare leaders. This event served as a high-profile platform for Elhoda to align its corporate vision with Egypt's national healthcare strategy under the patronage of the Egypt Healthcare Authority (EHA).",
+      intro: "On the sidelines of Arab Health 2025—the Middle East’s premier healthcare exhibition—Elhoda International joined a distinguished assembly of global healthcare leaders. This event served as a high-profile platform for Elhoda to align its corporate vision with Egypt's national healthcare strategy under the patronage of the Egypt Healthcare Authority (EHA).",
     },
 
     highlights: [
@@ -11887,6 +11845,7 @@ export const blogPosts = [
     ],
   },
 
+
   {
     slug: "Arab health-2",
     type: "one-time",
@@ -11895,10 +11854,28 @@ export const blogPosts = [
     category: "The Localization Protocol: A Milestone with the EHA",
     date: "2025",
 
-    images: [
-      "/africa-health-excon.jpg",
-      "/africia-health-2022.JPG",
-      "/africia-health-2024.jpg",
+   images: [
+      "/GAD_4497.jpg",
+      "/GAD_4505.jpg",
+      "/GAD_4590-Enhanced-NR.jpg",
+      "/GAD_4644-Enhanced-NR.jpg",
+      "/GAD_4651-Enhanced-NR.jpg",
+      "/GAD_4660-Enhanced-NR.jpg",
+      "/GAD_4672-Enhanced-NR.jpg",
+      "/GAD_4717-Enhanced-NR.jpg",
+      "/GAD_4735-Enhanced-NR.jpg",
+      "/GAD_4754-Enhanced-NR.jpg",
+      "/GAD_4756-Enhanced-NR.jpg",
+      "/GAD_4761-Enhanced-NR.jpg",
+      "/GAD_4764-Enhanced-NR.jpg",
+      "/GAD_4770-Enhanced-NR.jpg",
+      "/GAD_4779-Enhanced-NR.jpg",
+      "/GAD_4859-Enhanced-NR.jpg",
+      "/GAD_4866-Enhanced-NR.jpg",
+      "/GAD_4885-Enhanced-NR.jpg",
+      "/WhatsApp Image 2025-02-09 at 2.23.30 PM.jpg",
+      "/WhatsApp Image 2025-02-09 at 2.23.31 PM (1).jpg",
+      "/WhatsApp Image 2025-02-09 at 2.23.32 PM.jpg",
     ],
 
     overview: {
@@ -11928,6 +11905,7 @@ export const blogPosts = [
     ],
   },
 
+
   {
     slug: "New year event",
     type: "annual",
@@ -11937,9 +11915,7 @@ export const blogPosts = [
     date: "2025",
 
     images: [
-      "/africa-health-excon.jpg",
-      "/africia-health-2022.JPG",
-      "/africia-health-2024.jpg",
+      "/IMGL0216.jpg",
     ],
 
     overview: {

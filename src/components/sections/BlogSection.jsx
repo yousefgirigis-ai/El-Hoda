@@ -47,7 +47,7 @@ const BlogSection = ({
     ? blogPosts.filter((event) => event.type === filterType)
     : blogPosts;
 
-   splitIndex = Math.ceil(filteredEvents.length / 2);
+  splitIndex = Math.ceil(filteredEvents.length / 2);
   const leftEvents = filteredEvents.slice(0, splitIndex);
   const eventsForRight = filteredEvents.slice(splitIndex);
 

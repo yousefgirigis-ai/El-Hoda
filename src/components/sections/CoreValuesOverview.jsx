@@ -17,7 +17,7 @@ const CoreValues1 = () => {
         "Quality assurance clarity",
         "Regulatory compliance",
       ],
-      bgImage: "/factory7.jpg",
+      bgImage: "/_DSC8612.jpg",
     },
     {
       tabTitle: "Innovation",
@@ -32,7 +32,7 @@ const CoreValues1 = () => {
         "Advanced technology localization",
         "Market-leading solutions",
       ],
-      bgImage: "/factory8.jpg",
+      bgImage: "/_DSC8579.jpg",
     },
     {
       tabTitle: "Respect",

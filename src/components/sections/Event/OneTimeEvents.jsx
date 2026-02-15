@@ -64,7 +64,7 @@ const OneTimeEvents = () => {
               onClick={goToEvents}
               className="bg-white text-black px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-200 transition self-start sm:self-auto"
             >
-              ←  Back to Events
+              ← Back to Events
             </button>
           </div>
 

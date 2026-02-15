@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import OverviewSectionTitle from "./OverviewSectionTitle";
 
 const CorporateHistory = () => {
   // Refs for each timeline item
@@ -105,36 +106,13 @@ const CorporateHistory = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* SECTION TITLE */}
-        <motion.div
-          className="text-center mb-20"
-          initial={{ opacity: 0, y: -30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">
-            <span className="text-black">CORPORATE</span>{" "}
-            <span className="text-[#E81729]">HISTORY</span>{" "}
-            <br className="hidden md:block" />
-            <span className="text-black">& KEY MILESTONES</span>
-          </h2>
-          <motion.div
-            className="w-24 h-1.5 bg-[#E81729] mx-auto mb-6"
-            initial={{ width: 0 }}
-            whileInView={{ width: 96 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          />
-          <motion.p
-            className="text-gray-600 text-lg font-medium"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-          >
-            Corporate Milestones: Charting Our Growth
-          </motion.p>
-        </motion.div>
+        <OverviewSectionTitle
+          className="mb-20"
+          titleStart="CORPORATE"
+          titleAccent="HISTORY"
+          titleEnd="& KEY MILESTONES"
+          subtitle="Corporate Milestones: Charting Our Growth"
+        />
 
         {/* THE ROADMAP CONTAINER */}
         <div className="relative">

@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import OverviewSectionTitle from "./OverviewSectionTitle";
 
 const CorporateCitizenship = () => {
   // Refs for each section
@@ -117,18 +118,6 @@ const CorporateCitizenship = () => {
     },
   };
 
-  const growWidth = {
-    hidden: { width: 0 },
-    visible: {
-      width: "8rem",
-      transition: {
-        duration: 1,
-        ease: "easeOut",
-        delay: 0.5,
-      },
-    },
-  };
-
   return (
     <section
       ref={containerRef}
@@ -163,27 +152,11 @@ const CorporateCitizenship = () => {
             </motion.div>
           </motion.div>
 
-          <motion.h2
-            className="text-2xl sm:text-3xl md:text-5xl font-extrabold mb-3 md:mb-4 ml-10 md:ml-16 leading-tight"
-            variants={staggerContainer}
-          >
-            <motion.span className="text-gray-900" variants={fadeInUp}>
-              CORPORATE CITIZENSHIP &
-            </motion.span>{" "}
-            <motion.span
-              className="text-[#E81729]"
-              variants={fadeInUp}
-              transition={{ delay: 0.1 }}
-            >
-              EXTERNAL VALIDATION
-            </motion.span>
-          </motion.h2>
-
-          <motion.div
-            className="h-1 w-24 md:w-32 bg-gradient-to-r from-[#E81729] to-red-500 ml-10 md:ml-16 rounded-full"
-            variants={growWidth}
-            initial="hidden"
-            animate={isHeaderInView ? "visible" : "hidden"}
+          <OverviewSectionTitle
+            className="mb-3 md:mb-4 ml-10 md:ml-16"
+            align="left"
+            titleStart="CORPORATE CITIZENSHIP &"
+            titleAccent="EXTERNAL VALIDATION"
           />
         </motion.div>
 

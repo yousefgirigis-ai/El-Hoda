@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import OverviewSectionTitle from "./OverviewSectionTitle";
 
 const ProductsServices = () => {
   const containerRef = useRef(null);
@@ -324,35 +325,13 @@ const ProductsServices = () => {
             variants={scaleIn}
           />
 
-          <motion.h2
-            className="text-4xl md:text-5xl font-bold mb-6 relative"
-            variants={staggerContainer}
-          >
-            <motion.span
-              className="bg-gradient-to-r from-black to-gray-900 bg-clip-text text-transparent"
-              variants={fadeInUp}
-            >
-              Products and
-            </motion.span>{" "}
-            <motion.span
-              className="bg-gradient-to-r from-[#E81729] to-[#B31020] bg-clip-text text-transparent"
-              variants={fadeInUp}
-              transition={{ delay: 0.1 }}
-            >
-              Services
-            </motion.span>
-          </motion.h2>
-
-          <motion.div
-            className="inline-flex items-center gap-2 mb-6"
-            variants={fadeInLeft}
-          >
-            <div className="w-12 h-1 bg-gradient-to-r from-black to-[#E81729] rounded-full" />
-            <span className="text-[#E81729] font-bold text-lg tracking-wide">
-              STRATEGIC HEALTHCARE SOLUTIONS
-            </span>
-            <div className="w-12 h-1 bg-gradient-to-r from-[#E81729] to-black rounded-full" />
-          </motion.div>
+          <OverviewSectionTitle
+            className="mb-6"
+            align="left"
+            titleStart="PRODUCTS AND"
+            titleAccent="SERVICES"
+            subtitle="Strategic Healthcare Solutions"
+          />
         </motion.div>
 
         {/* INTRO */}

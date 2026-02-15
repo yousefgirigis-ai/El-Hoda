@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import { Building2, MapPin, Factory } from "lucide-react";
+import OverviewSectionTitle from "./OverviewSectionTitle";
 
 const HeadquartersOperations = () => {
   // Refs for each card item
@@ -145,53 +146,14 @@ const HeadquartersOperations = () => {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200/50 mb-8"
             variants={titleVariants}
           >
-            <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-            <span className="text-sm font-medium text-gray-600 tracking-wider">
-              CORPORATE INFRASTRUCTURE
-            </span>
+       
           </motion.div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-4">
-            <span className="text-black">HEADQUARTERS</span>{" "}
-            <motion.span
-              className="inline-block mx-2 md:mx-4"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <span className="text-transparent bg-gradient-to-r from-[#E81729] via-[#ff4757] to-[#ff6b81] bg-clip-text drop-shadow-[0_4px_12px_rgba(232,23,41,0.3)] bg-[length:200%_auto] animate-gradient-x">
-                &
-              </span>
-            </motion.span>{" "}
-            <motion.span
-              className="inline-block"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <span className="relative">
-                <span className="text-transparent bg-gradient-to-r from-[#ff6b81] via-[#ff4757] to-[#E81729] bg-clip-text drop-shadow-[0_4px_12px_rgba(232,23,41,0.3)] bg-[length:200%_auto] animate-gradient-x">
-                  OPERATIONS
-                </span>
-                <motion.div
-                  className="absolute -bottom-3 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#E81729] to-transparent"
-                  initial={{ width: 0, opacity: 0 }}
-                  whileInView={{ width: "100%", opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.6 }}
-                />
-              </span>
-            </motion.span>
-          </h2>
-
-          <motion.div className="max-w-2xl mx-auto" variants={contentVariants}>
-            <div className="h-px w-24 bg-gradient-to-r from-transparent via-gray-300 to-transparent mx-auto mb-8" />
-            <p className="text-lg text-gray-600 leading-relaxed">
-              Strategic integration of corporate governance with manufacturing
-              excellence
-            </p>
-          </motion.div>
+          <OverviewSectionTitle
+            className="mb-0"
+            titleStart="HEADQUARTERS &"
+            titleAccent="OPERATIONS"
+            subtitle="Strategic integration of corporate governance with manufacturing excellence"
+          />
         </motion.div>
 
         {/* ENHANCED CARDS GRID */}

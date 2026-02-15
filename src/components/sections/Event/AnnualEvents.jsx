@@ -55,9 +55,7 @@ const AnnualEvents = () => {
                 Events
               </button>
               <span className="mx-2">&gt;</span>
-              <span className="text-gray-900 font-semibold">
-                Annual Events
-              </span>
+              <span className="text-gray-900 font-semibold">Annual Events</span>
             </div>
 
             <button

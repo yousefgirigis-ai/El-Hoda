@@ -10,8 +10,11 @@ import Footer from "../../common/Footer";
 const EventDetails = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
+
+  // Combine both arrays and find the event
   const allEvents = [...annualEvents, ...oneTimeEvents];
   const event = useMemo(() => allEvents.find((e) => e.slug === slug), [slug]);
+
   const listPath =
     event?.type === "one-time" ? "/events/one-time" : "/events/annual";
   const listLabel =
@@ -239,7 +242,6 @@ const EventDetails = () => {
       <section className="py-10 bg-gray-50 border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
-
             <button
               onClick={() => navigate("/")}
               className="bg-[#E81729] text-white px-6 py-3 rounded-full font-semibold hover:bg-red-700 transition-colors"

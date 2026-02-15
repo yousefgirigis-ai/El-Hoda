@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import { Building2, Target, BadgeCheck, Clock3 } from "lucide-react";
+import OverviewSectionTitle from "./OverviewSectionTitle";
 
 const CorporateIdentity = () => {
   const containerRef = useRef(null);
@@ -137,65 +138,12 @@ const CorporateIdentity = () => {
         <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-gradient-to-tr from-rose-100/25 via-transparent to-orange-100/20 rounded-full blur-3xl opacity-60 animate-pulse-slower" />
 
         {/* SECTION TITLE - EXACT SAME STYLE AS HeadquartersOperations */}
-        <motion.div
-          className="text-center mb-20 relative"
-          initial={{ opacity: 0, y: -30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-red-50/40 to-transparent blur-xl opacity-30"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 0.3 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.5 }}
-          />
-
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-4">
-            <span className="text-black">CORPORATE</span>{" "}
-            <motion.span
-              className="inline-block mx-2 md:mx-4"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <span className="text-transparent bg-gradient-to-r from-[#E81729] via-[#ff4757] to-[#ff6b81] bg-clip-text drop-shadow-[0_4px_12px_rgba(232,23,41,0.3)] bg-[length:200%_auto] animate-gradient-x">
-                IDENTITY
-              </span>
-            </motion.span>{" "}
-            <span className="text-black">&</span>{" "}
-            <motion.span
-              className="inline-block"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <span className="relative">
-                <span className="text-transparent bg-gradient-to-r from-[#ff6b81] via-[#ff4757] to-[#E81729] bg-clip-text drop-shadow-[0_4px_12px_rgba(232,23,41,0.3)] bg-[length:200%_auto] animate-gradient-x">
-                  STRUCTURE
-                </span>
-                <motion.div
-                  className="absolute -bottom-3 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#E81729] to-transparent"
-                  initial={{ width: 0, opacity: 0 }}
-                  whileInView={{ width: "100%", opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.6 }}
-                />
-              </span>
-            </motion.span>
-          </h2>
-
-          <motion.div
-            className="w-48 h-1 bg-gradient-to-r from-transparent via-[#E81729]/50 to-transparent mx-auto rounded-full"
-            initial={{ width: 0, opacity: 0 }}
-            whileInView={{ width: 192, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          />
-        </motion.div>
+        <OverviewSectionTitle
+          className="mb-20"
+          titleStart="CORPORATE"
+          titleAccent="IDENTITY"
+          titleEnd="& STRUCTURE"
+        />
 
         {/* CARDS GRID */}
         <motion.div

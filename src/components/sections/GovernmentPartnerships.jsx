@@ -8,6 +8,7 @@ import {
   Search,
   Stethoscope,
 } from "lucide-react";
+import OverviewSectionTitle from "./OverviewSectionTitle";
 
 const GovernmentPartnerships = () => {
   // Refs for each section
@@ -284,49 +285,15 @@ const GovernmentPartnerships = () => {
 
                 {/* Title section */}
                 <motion.div className="flex-1" variants={staggerContainer}>
-                  <motion.div
-                    className="inline-flex flex-wrap items-center gap-2 md:gap-4 mb-5 md:mb-6"
-                    variants={cardItem}
-                  >
-                    <div className="hidden sm:block w-16 h-1 bg-gradient-to-r from-[#E81729] to-transparent rounded-full" />
-                    <span className="text-[11px] sm:text-sm font-semibold uppercase tracking-wider text-[#E81729] bg-red-50 px-3 py-1.5 rounded-full border border-red-100">
-                      Strategic Partnership
-                    </span>
-                    <div className="hidden sm:block w-16 h-1 bg-gradient-to-l from-[#E81729] to-transparent rounded-full" />
-                  </motion.div>
+                  
 
-                  <motion.h3
-                    className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 md:mb-6 leading-tight"
-                    variants={staggerContainer}
-                  >
-                    <motion.span
-                      className="text-gray-900 drop-shadow-sm"
-                      variants={cardItem}
-                    >
-                      Government &{" "}
-                    </motion.span>
-                    <motion.span
-                      className="relative inline-block"
-                      variants={cardItem}
-                    >
-                      <span className="relative z-10 text-transparent bg-gradient-to-r from-[#E81729] via-[#ff4757] to-[#E81729] bg-clip-text bg-[length:200%_auto] animate-gradient-x">
-                        Public Health
-                      </span>
-                      <motion.div
-                        className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#E81729] to-transparent"
-                        initial={{ width: 0, opacity: 0 }}
-                        animate={{ width: "100%", opacity: 1 }}
-                        transition={{ duration: 1, delay: 0.5 }}
-                      />
-                    </motion.span>
-                    <br />
-                    <motion.span
-                      className="text-gray-900 drop-shadow-sm"
-                      variants={cardItem}
-                    >
-                      Initiatives
-                    </motion.span>
-                  </motion.h3>
+                  <OverviewSectionTitle
+                    className="mb-4 md:mb-6"
+                    align="left"
+                    titleStart="GOVERNMENT &"
+                    titleAccent="PUBLIC HEALTH"
+                    titleEnd="INITIATIVES"
+                  />
 
                   <motion.p
                     className="text-base md:text-lg text-gray-600 max-w-3xl leading-relaxed"

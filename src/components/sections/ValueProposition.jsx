@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import OverviewSectionTitle from "./OverviewSectionTitle";
 
 const ValueProposition = () => {
   // Refs for each section
@@ -17,18 +18,6 @@ const ValueProposition = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const fadeInLeft = {
-    hidden: { opacity: 0, x: -40 },
-    visible: {
-      opacity: 1,
-      x: 0,
       transition: {
         duration: 0.8,
         ease: "easeOut",
@@ -173,35 +162,13 @@ const ValueProposition = () => {
             variants={scaleIn}
           />
 
-          <motion.h2
-            className="text-4xl md:text-5xl font-bold mb-6 relative"
-            variants={staggerContainer}
-          >
-            <motion.span
-              className="bg-gradient-to-r from-black to-gray-900 bg-clip-text text-transparent"
-              variants={fadeInUp}
-            >
-              EL HODA
-            </motion.span>{" "}
-            <motion.span
-              className="bg-gradient-to-r from-[#E81729] to-[#B31020] bg-clip-text text-transparent"
-              variants={fadeInUp}
-              transition={{ delay: 0.1 }}
-            >
-              VALUE PROPOSITION
-            </motion.span>
-          </motion.h2>
-
-          <motion.div
-            className="inline-flex items-center gap-2 mb-6"
-            variants={fadeInLeft}
-          >
-            <div className="w-12 h-1 bg-gradient-to-r from-black to-[#E81729] rounded-full" />
-            <span className="text-[#E81729] font-bold text-lg tracking-wide">
-              THE EL HODA ADVANTAGE
-            </span>
-            <div className="w-12 h-1 bg-gradient-to-r from-[#E81729] to-black rounded-full" />
-          </motion.div>
+          <OverviewSectionTitle
+            className="mb-6"
+            align="left"
+            titleStart="EL HODA"
+            titleAccent="VALUE PROPOSITION"
+            subtitle="The El Hoda Advantage"
+          />
 
           <motion.div
             className="text-gray-800 leading-relaxed text-lg bg-gradient-to-r from-white to-gray-50 p-8 rounded-2xl border border-gray-200 shadow-sm group"
